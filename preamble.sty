@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage[margin=1.5in]{geometry}
+\usepackage[margin=3cm]{geometry}
 \usepackage{multicol}
 \usepackage{color}
 \usepackage{pgfgantt}
@@ -18,13 +18,21 @@
 \usepackage{fancyhdr}
 \usepackage{nameref}
 \usepackage[backend=biber,style=ieee]{biblatex}
+\usepackage{eso-pic}
+\usepackage{parskip}
+\usepackage{enumitem}
 \pagestyle{fancyplain}
 \addbibresource{refs.bib}
-
+\usepackage[margin=1cm]{caption}
+\usepackage{enumitem}
+\setlist{noitemsep}
 \setlength{\columnsep}{1cm}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
 \frenchspacing
+\usepackage{subcaption}
+\usepackage{glossaries}
+\makenoidxglossaries
 
 
 % Comments on 
@@ -34,10 +42,58 @@
 
 % Should we perhaps make a preamble.sty file for all of these imports if they grow substantially. 
 
+\newcommand{\backgroundpic}[3]{
+	\put(#1,#2){
+	\parbox[b][\paperheight]{\paperwidth}{
+	\centering
+	\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#3}}}}
 
 
-\title{{\Huge \textsc{Hastings}}\\ Online Multiplayer Game Using Haste.App}
 
-\author{Michael Milakovic ~ Benjamin Block ~ André Samuelsson \\ Joel Gustafsson ~ Mattias Nilsen}
+\lstdefinestyle{custom}{
+  belowcaptionskip=1\baselineskip,
+  frame=l,
+  xleftmargin=\parindent,
+  language=Haskell,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+  keywordstyle=\color{blue}\bfseries,
+  alsoletter=\#,
+  morekeywords = {\#define,\#ifdef,\#else,\#endif},
+  deletekeywords = {return}
+}
 
-\date{\today}
+\lstset{
+    escapechar=@,
+    style=custom,
+    showstringspaces=false,
+    }
+    
+\input{glossary}
+
+%\lstdefinelanguage{Haskellwopwop}{
+%  language     = Haskell,
+%  morekeywords = {fix, }
+%}
+%
+%\lstnewenvironment{haskellcode}
+%  {\lstset{language = Haskellwopwop}}
+%  {}
+  
+% \lstset{ %
+%  basicstyle=\footnotesize\ttfamily,
+%  numbers=left,
+%  numberstyle=\tiny\color{gray}\ttfamily,
+%  numbersep=5pt,
+%  backgroundcolor=\color{white},
+%  showspaces=false,
+%  showstringspaces=false,
+%  showtabs=false,
+%  frame=single,
+%  rulecolor=\color{black},
+%  captionpos=b,
+%  keywordstyle=\color{blue}\bf,
+%  commentstyle=\color{gray},
+%  stringstyle=\color{green},
+%  keywordstyle={[2]\color{red}\bf},
+%}

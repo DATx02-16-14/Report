@@ -1,155 +1,360 @@
+
 \documentclass[a4paper]{article}
 
 \usepackage{preamble}
 \begin{document}
+% CREATED BY DAVID FRISK, 2015
 
-\maketitle
+% COVER PAGE
+\begin{titlepage}
+\newgeometry{top=3cm, bottom=3cm,
+      left=2.25 cm, right=2.25cm} % Temporarily change margins
+
+% Cover page background
+\AddToShipoutPicture*{\backgroundpic{-4}{670.7}{figure/coverHeader.png}}
+%\addtolength{\voffset}{2cm}
+
+
+% Cover picture (replace with your own or delete)
+%\begin{figure}[H]
+%\centering
+%\vspace{2cm}  % Adjust vertical spacing here
+%\includegraphics[width=0.9\linewidth]{title.png}
+%\end{figure}
+
+
+% Cover text
+\mbox{}
+\vfill
+\renewcommand{\familydefault}{\sfdefault} \normalfont % Set cover page font
+\textbf{{\huge Evaluating Haste.App: Haskell in a web setting}}   \\[0.5cm]
+{\Large Effects of using a seamless, linear, client-centric programming model}\\[0.5cm]
+
+Bachelor Science Thesis in Computer Science and Engineering \setlength{\parskip}{1cm}
+
+
+
+{\Large Benjamin Block} \setlength{\parskip}{2.9cm}\\
+{\Large Joel Gustafsson} \setlength{\parskip}{2.9cm}\\
+{\Large Michael Milakovic} \setlength{\parskip}{2.9cm}\\
+{\Large Mattias Nilsen} \setlength{\parskip}{2.9cm}\\
+{\Large André Samuelsson} \setlength{\parskip}{2.9cm}
+
+
+Department of Computer Science and Engineering \\
+\textsc{Chalmers University of Technology} \\
+Gothenburg, Sweden 2016
+
+\renewcommand{\familydefault}{\rmdefault} \normalfont % Reset standard font
+\end{titlepage}
+
+% IMPRINT PAGE (BACK OF TITLE PAGE)
+\newpage
+\thispagestyle{plain}
+The Authors grants to Chalmers University of Technology and University of Gothenburg the non-exclusive right to publish the Work electronically and in a non-commercial purpose make it accessible on the Internet. The Author warrants that he/she is the author to the Work, and warrants that the Work does not contain text, pictures or other material that violates copyright law.
+
+The Author shall, when transferring the rights of the Work to a third party (for example a publisher or a company), acknowledge the third party about this agreement. If the Author has signed a copyright agreement with a third party regarding the Work, the Author warrants hereby that he/she has obtained any necessary permission from this third party to let Chalmers University of Technology and University of Gothenburg store the Work electronically and make it accessible on the Internet.
+
+\vspace*{2.5cm}
+Evaluating Haste.App: Haskell in a web setting\\
+Effects of using a seamless, linear, client-centric programming model\\
+
+Benjamin Block\setlength{\parskip}{1cm}\\
+Joel Gustafsson\setlength{\parskip}{1cm}\\
+Michael Milakovic\setlength{\parskip}{1cm}\\
+Mattias Nilsen\setlength{\parskip}{1cm}\\
+André Samuelsson\setlength{\parskip}{1cm}
+
+\copyright ~ Benjamin Block, 2016. \setlength{\parskip}{1cm}\\
+\copyright ~ Joel Gustafsson, 2016. \setlength{\parskip}{1cm}\\
+\copyright ~ Michael Milakovic, 2016. \setlength{\parskip}{1cm}\\
+\copyright ~ Mattias Nilsen, 2016. \setlength{\parskip}{1cm}\\
+\copyright ~ André Samuelsson, 2016. \setlength{\parskip}{1cm}
+
+Supervisor: Emil Axelsson\\
+Examiner: Niklas Broberg, Arne Linde, Department of Computer Science and Engineering\setlength{\parskip}{1cm}
+
+Chalmers University of Technology\\
+University of Gothenburg\\
+Department of Computer Science and Engineering\\
+SE-412 96 Gothenburg\\
+Sweden\\
+Telephone +46 31 772 1000 \setlength{\parskip}{0.5cm}
+
+\vfill
+% Caption for cover page figure if used, possibly with reference to further information in the report
+%Cover: Wind visualization constructed in Matlab showing a surface of constant wind speed along with streamlines of the flow. \setlength{\parskip}{0.5cm}
+
+Department of Computer Science and Engineering\\
+Gothenburg, Sweden 2016
+
+
+\normalsize
+
+
+
 \pagenumbering{gobble}
 \vfill
 
-\begin{center}
-\large
-Computer Science and Engineering\\
-\textsc{Chalmers University of Technology} \\
-Gothenburg, Sweden 2016 \\
-\normalsize
-\end{center}
 
 \newpage
 \section*{Abstract}
+In this report, we evaluate Haste.App, a newly developed Haskell framework for distributed web applications. Haste.App promises to deliver a number of ease of use factors in addition to allowing the static type checking of Haskell to be extended over the network. It also pairs with the Haste compiler which compiles Haskell code to JavaScript. We conclude that Haste.App is a promising library that allows real world distributed web applications to be written in Haskell with ease. The seamless, client-centric programming model also has positive effects on programmer productivity. There are, however, some issues that will need to be addressed: some way of making sure the JavaScript is updated when the server is, and some standards when it comes to project structure as well as some convenient way of handling DOM. In order to reach this conclusion, we evaluate Haste.App primarily based on three key aspects: Performance, stability, and programmer productivity. The evaluation is performed by creating a simple online multiplayer board game and an attached lobby system.
+
+%The performance of Haste.App was evaluated by looking at three main points: Firstly, system resources used by the server. Secondly, the execution time of loading the page on the client. Lastly, the amount of data that has to be sent during usage of the application. The client data and bandwidth is then compared to other sites offering a similar service while the server performance has to be interpreted as it is. 
+
+%Stability of an application developed in Haste.App is examined by looking at aspects such as runtime errors, and restarting the server, and syncing the JavaScript to the server. These aspects are evaluated as far as any issues with them have been exposed in the limited time the project has had.
+
+%The last point, programmer productivity, is evaluated with the seamless, client-centric programming model of Haste.App in mind along with errors present in Haste.App and benefits of working in Haskell compared to other languages. Lines of code of the finished application is also considered. The lines of code are compared to other similar applications, while the seamless, client-centric programming model, and working in Haskell is evaluated based upon our previous programming experience.
+\vfill
+\textbf{Keywords}:
+Haskell, Haste.App, Haste, functional programming, web development.
+\newpage
+
+%what is it
+%why is it relevant
+%what did we conclude
 \section*{Sammandrag}
-\section*{Keywords}
+I denna rapport utvärderar vi det nyutvecklade Haskellbiblioteket Haste.App, som syftar till att underlätta implementeringen utav distribuerade webbapplikationer. Haste.App gör det möjligt att utöka Haskells statiska typkontroll över nätverkskommunikation samt ger programmeraren tillgång till ett antal bekvämlighetsfaktorer. Utöver det, levereras Haste.App tillsammans med Haskell till JavaScript kompilatorn Haste. Vi kommer fram till att Haste.App är ett lovande bibliotek som enkelt tillåter webbapplikationer att skrivas i Haskell. Den sömmlösa, klientcentrerade programmeringsmodellen från Haste.App har också positiva effekter på programmerares produktivitet. Däremot finns det ett fåtal problem som behöver ses över: ett sätt att se till att den kompilerade Javscript-koden uppdateras när servern blir uppdaterad, några standarder när det kommer till struktur på projekt i Haste.App, samt något bekvämt sätt att hantera DOM-manipulation. Vi nådde denna slutsats genom att undersöka Haste.App ur tre synvinklar: prestanda, stabilitet samt programmerares produktivitet. Denna undersökning genomförs genom att implementera ett enkelt brädspel för flera spelare över nätverket med ett tillhörande lobbysystem.
+
+%Prestandan utav Haste.App utvärderades framförallt med tre punkter: Först, systemresurser som används utav servern. Sedan, tiden som den genererade JavaScripten tar att ekevera när en klient ansluter till servern. Slutgiltligen, hur mycket data som behöver skickas när en klient använder lobbyn. Klient- samt nätverksdatan jämförs sedan med andra hemsidor som erbjuder liknande produkter medan systemresurserna på servern får utvärderas så som de är.
+
+%Vidare, stabiliteten utav en applikation utvecklad i Haste.App är granskades genom att studera aspekter så som fel som uppstår under körning, när servern måste starta om eller krashar, och synka den genererade JavaScripten med servern. Dessa aspekter utvärderas i den mån som problem om dem har uppkommit under den begränsade tiden projektet har haft.
+
+%Den sista puknten, programmerares produktivitet i Haste.App evaluerades med den sömmlösa, klientcentrerade programmeringsmodellen som Haste.App har inbyggd i åtanke tillsammans med fel i Haste.App samt de fördelar so finns genom att arbeta i Haskell jämfört med andra språk. Antal rader kod utav den färdiga produkten är också det jämfört med andra liknande applikationer. Den sömmlösa, klientcentrerade programmeringsmoddellen och att arbeta i Haskell utvärderas baserat på vår programmeringserfarenhet.
+
+
 \newpage
 \listoftodos
 \tableofcontents
-\listoffigures
+
+\newpage
+
+\glsaddall
+\printnoidxglossary
+
 
 \newpage
 \pagenumbering{arabic}
 
-\section{Introduction}
-\subsection{Purpose of the project}
-\label{sec:purpose}
-\todo{Change purpose to include Haste.App in first sentence since we focus a lot of Haste.App and secondarily on functional languages.}
-The purpose of the report is to discuss and evaluate the advantages and disadvantages of writing client-server applications with all of the properties of using a purely functional language. For this purpose the language used will be Haskell with the libraries Haste and Haste.App. Using these tools a game and a lobby will be developed. More specifically it will investigate whether or not there will be any effect on performance, if there will be any advantages in regards to programmer productivity, and if there will be any observable benefits regarding the stability of the application. An additional purpose of the project is to supply comments and feedback on Haste and Haste.App back to the developer, who is a Ph.D student at Chalmers.
 
-\subsection{Limitations for the project}
-The work will not assess demanding real-time applications and graphics using Haste.App, since the focus of the project is mainly assessing the suitability of using Haskell to program for the web using Haste.App. Neither will a second product using a more traditional library be created for the purpose of comparing performance, stability and programmer productivity.
+\section{Introduction}
+Haste.App is a new Haskell framework for writing seamless client-server applications. The framework addresses some of the prevailing issues with traditional web development. It allows the programmer to write a client-server application in a single file and extends type checking over the network. There are a lot of promising advantages with Haste.App and utilising functional programming when developing web applications.
 
 \subsection{Background}
-% The background of the project
-Writing web applications typically involves incorporating JavaScript for a large portion of the code. JavaScript has many benefits such as being very popular thus having a rich set of libraries. It is also good for prototyping since it is a simple and dynamically typed language. Haskell, on the other hand, is a strongly typed language with an advanced type system. Strongly typed languages can make it harder to create a simple prototype. The absence of variables as states could make it is easier to verify that the code is correct \cite{marlow2010haskell}. The ability to do equational reasoning is also greatly simplified \autocite{equational-reasoning}.
+Writing interactive web applications typically incorporates JavaScript for a significant portion of the client-side code. The prevalence of JavaScript stems from the fact that it is supported by all significant web browsers and virtually all websites use some form of JavaScript \cite{flanagan2011javascript}. Because JavaScript is popular, it has a large community supporting it and a large number of libraries. Haskell, on the other hand, is not as popular as JavaScript but it has other benefits, such as its advanced type system. Other advantages include the ability to perform equational reasoning on the code \cite{gibbons2011just} and a powerful testing library called QuickCheck \cite{Claessen:2011:QLT:1988042.1988046}.
 
-Haste is a Haskell to JavaScript compiler. It makes it possible to use the advantages of a purely functional language in a web setting. The Haste compiler aims to produce compact code and is also based on the standard GHC Haskell compiler.
+Haste is a Haskell to JavaScript compiler. It makes it possible to use the advantages of a pure functional language in a web setting. Haste is based on the Glasgow Haskell Compiler, and its primary aim is to produce compact JavaScript code \cite{a-distributed-haskell-for-the-modern-web}.
 
-Haste also comes with the Haste.App library which allows both the client- and server-side code to be written in one program\cite{ekblad2015seamless}. The library takes care of the network communication, so the programmer does not have to write it explicitly. It relieves the programmer from this tedious and error-prone task. Haste.App is also pursuing a client-centric programming model. This means that the programmer takes the view of the client when writing the code\cite{a-distributed-haskell-for-the-modern-web}. At the time of writing this thesis Haste.App is still very new and requires a lot more testing and investigation, but the potential rewards are promising.
+Haste also comes with the Haste.App library which allows both the client- and server-side code to be written in one program \cite{ekblad2015seamless}. The library takes care of the network communication, alleviating the programmer from writing it explicitly. As such, the programmer is relieved from this tedious and error-prone task. Haste.App is also pursuing a client-centric programming model, which means that the programmer writes the code from the client's perspective \cite{a-distributed-haskell-for-the-modern-web}. At the time of writing this thesis, Haste.App is still very new and requires more testing and investigation, but the potential rewards are promising.
 
+\subsection{Purpose of the project}
+\label{sec:purpose}
+The purpose of this report is to discuss and evaluate the advantages and disadvantages of writing client-server applications using the library Haste.App, with all of the properties of using a pure functional language. The pure functional language used is Haskell along with the Haskell to JavaScript compiler Haste, which is coupled with Haste.App, a library for writing web applications. Using these tools a game and a lobby is developed. Firstly, it is investigated whether or not there is any effect on performance, secondly, if there are any advantages in regards to programmer productivity, and thirdly, if there are any benefits regarding the stability of the application. An additional purpose of the project is to supply comments and feedback on Haste and Haste.App back to the developer, who is a Ph.D. student at Chalmers University of Technology.
+
+\subsection{Limitations for the project}
+\label{sec:limitations}
+The work does not assess demanding real-time applications and graphics using Haste.App since the focus of the project is mainly to evaluate the suitability of using Haste.App and Haskell to program for the web. Neither is a second product created using a more traditional library, for the purpose of comparing performance, stability and programmer productivity.
 
 
 \subsection{Related research}
-There are two ways to look at related research regarding this thesis. The first being a greater overview of functional research, particularly applied functional programming which Chalmers is heavily pursuing. The research done in this thesis is of course just another example of functional programming applied to an area where it is not so commonly used today, namely development of web application.
+There are two ways to view related research regarding this project. The first being a greater overview of functional research, particularly applied functional programming which Chalmers University of Technology is heavily pursuing. The research done in this thesis is another example of functional programming applied to an area where it is not so commonly used today, namely web development.
 
-The other view is research directly related to the work of this thesis. This thesis is of course heavily related to the work of Anton Ekblad, who is the main developer of the Haste compiler and it's accompanying libraries. In his licentiate thesis: A Distributed Haskell for the Modern Web, he describes the implementation of Haste.App and it's potential benefits \cite{a-distributed-haskell-for-the-modern-web}.
+The other view is research directly related to the work of this thesis. This thesis is, of course, related to the work of Anton Ekblad, who is the main developer of the Haste compiler and its accompanying libraries. In his licentiate thesis, "A Distributed Haskell for the Modern Web", he describes the implementation of Haste.App and its potential benefits \cite{a-distributed-haskell-for-the-modern-web}.
 
-In terms of general language X to JavaScript compilers there is also happening a lot. Most languages have an JavaScript compiler that is being developed actively, an example is ClojureScript which is a Clojure to JavaScript compiler.
+Regarding general language $X$ to JavaScript compilers, there is also much research. Many programming languages have a JavaScript compiler; an example is the popular ClojureScript \cite{clojurescript-website} which is a Clojure to JavaScript compiler.
 
-\subsection{Problem description}
+\section{Problem description}
 \label{sec:problem}
 % Problemanalys. Split the purpose into smaller parts,
-To help analyse the purpose, it can be split into several smaller parts. These deal with different aspects of writing client-server applications with the help of Haste.App. As mentioned in \cref{sec:purpose} the purpose can be split into effects on performance, programmer productivity and stability. These are, however, also large and hard to analyse without further breaking them into even smaller parts.
+The purpose is analysed by splitting it into several smaller parts. These deal with different aspects of writing client-server applications with the help of Haste.App. As mentioned in \cref{sec:purpose} the purpose can be split into effects on performance, programmer productivity and stability. These are, however, also large and hard to analyse without further breaking them into even smaller parts.
 
 
-\subsubsection{Performance}
-Performance is a crucial aspect when writing client-server applications. On the server side, the application can not use too much system resources. This is important both because it is often desirable to have as inexpensive servers as possible (while maintaining enough performance), and because it allows more clients to be connected to the server. On the client side, the application needs to be efficient to make sure the user's computer continues to run smoothly and that the user does not experience any delays from performance issues. As such it is important that there is not a large discrepancy between using Haste.App and a more traditional client-server approach. There could be several reasons for a large discrepancy happening: Firstly, on the client side, the Haste compiler might generate JavaScript that is slower than expected for some Haskell code. Secondly, the server part of an application written in Haste.App might be considerably slower than using any other framework for client-server applications to be acceptable. In addition it might be of interest for the report to investigate whether it is possible to work around such problems with the compiler. Even though the programmer has to spend extra time rewriting code that already work, the project might still be more effective due to the benefits given by both Haskell and Haste.App.
+\subsection{Performance description}
+Performance is a crucial aspect when writing client-server applications, and therefore a crucial aspect when assessing Haste.App. On the server-side, the application created with Haste.App can not be too demanding regarding system resources. This is important both because it is often desirable to have as inexpensive servers as possible (while maintaining enough performance), and because it allows more clients to be connected to the server. On the client-side, the application and code generated by Haste need to be efficient to make sure the user's computer runs smoothly and that the user does not experience any delays from performance issues. As such it is important that there is not a significant discrepancy between using Haste.App and a more traditional client-server approach. 
 
+There could be several reasons for a significant divergence: Firstly, on the client-side, the Haste compiler might generate JavaScript that is slower than equivalent JavaScript written directly in the language. Secondly, the server part of an application written in Haste.App cannot be considerably slower than writing an application using a different framework. 
 
-\subsubsection{Programmer productivity}
+\subsection{Programmer productivity description}
 \label{sec:programmer_productivity}
-Traditional client-server applications forces the programmer to write two different applications, and the communication between them. This can be an error prone and tedious task as it forces the programmer to make sure the types match both on the client and the server. Moreover, the arbitrary communication can make the program flow confusing and difficult to grasp as well as introduce errors. In this traditional model, both the server and client can drive the program flow, something that also serves to make the program flow unpredictable. These are all problems when considering programmer productivity.
+Traditional client-server applications, in contrast to Haste.App, force the programmer to write two separate applications and the communication between them. Writing two applications can be an error-prone and tedious task as it forces the programmer to make sure the types match both on the client and on the server. Moreover, the arbitrary communication can make the program flow confusing and difficult to grasp as well as introduce errors. In this traditional model, both the server and client can drive the program flow, something that also serves to make the program flow unpredictable. These are all problems when considering programmer productivity.
 
-Haste.App tries to counter these issues in a number of ways. Most importantly it allows the programmer to write both the client code and the server code in the same file, and makes use of Haskell's static and strong type checking to handle the communication as well as the rest of the code. It also lets the client be the only driving force in the application and uses a synchronous, linear programming model \cite{ekblad2015seamless}. These attempts from Haste.App to counter problems regarding programmer productivity when writing traditional client-server applications might influence programmer productivity in one direction or another.
+Haste.App tries to counter these issues in a number of ways. Most importantly it allows the programmer to write both the client code and the server code in the same file and makes use of Haskell's static and strong type checking to handle the communication as well as the rest of the code. It also lets the client be the only driving force in the application and uses a synchronous, linear programming model \cite{ekblad2015seamless}. Furthermore, Haskell has been shown to be a more user-friendly language than imperative languages in some scenarios \cite{mathematical-comparison-haskell-c++}. 
 
+%As such programmer productivity is an interesting aspect to assess Haste.App upon.
 
-\subsubsection{Stability}
-On a language level Haskell brings many benefits, as it is a strongly typed static language. The static type checking verifies type correctness at compile time which allows bugs which are trivial but hard to find to be tracked down more easily. Another important benefit the type system in Haskell brings is that it allows for pure logic to be separated from its impure counterparts. This type system brings a tremendous benefit by allowing the use of tools like QuickCheck to test the pure logic of the application \cite{Claessen:2011:QLT:1988042.1988046}. Haste.App also extends the static type checking over the network through it's remote procedure calls (RPC), which might remove confusing network errors. Because the distinction of pure and impure code is made so explicit, expressions which are side-effect free become obvious.
+%These attempts from Haste.App to counter problems regarding programmer productivity when writing traditional client-server applications might influence programmer productivity in one direction or another.
 
-The programmer can use these benefits when writing the code with the Haste compiler. Stability will thus be investigated to see if the advantages Haskell brings, in terms of program correctness, is of any practical use when writing client-server applications.
+\subsection{Stability description}
+On a language level, Haskell brings many benefits, as it is a strongly typed static language. The static type checking verifies type correctness at compile time which allows bugs which are trivial but hard to find to be tracked down more easily. Another important benefit the type system in Haskell brings is that it allows for pure logic to be separated from its impure counterparts. This type system brings a benefit by allowing the use of tools like QuickCheck to test the pure logic of the application \cite{Claessen:2011:QLT:1988042.1988046}. Haste.App also extends the static type checking over the network through its remote procedure calls (RPC), which might remove confusing network errors. 
 
-Besides language level correctness, the stability of the Haste compiler needs to be taken into account. Particularly the Haste.App module, which is at the heart of this thesis, can be expected to have errors. While these errors might decrease the stability of the product they will not be the fault of the program itself. This is where giving feedback on Haste and Haste.App becomes important as it will allow for the bugs to be tracked down and fixed.
+The programmer can use these benefits when writing the code with the Haste compiler. Stability is thus investigated to see if the advantages Haskell brings, in terms of program correctness, is of any practical use when writing client-server applications.
+
+Besides language level correctness, the stability of the Haste compiler needs to be taken into account. Particularly the Haste.App module, which this project primarily focuses on, has to be evaluated to detect any errors. While these errors might decrease the stability of the product, they are not the fault of the program itself. This is where giving feedback on Haste and Haste.App becomes important as it allows the bugs to be tracked down and fixed.
 
 
 
 \section{Technical background}
-In this section the techniques used to create the lobby system and the game are described, together with an account of different ways of addressing some of the problems one might encounter during web development.
-% To understand what we have done
-% For example there are problems with DOM so what is DOM etc.
+Developing a web application using Haskell and Haste.App requires the use of a number of technical tools, different languages, and standards. What follows is a description of these tools, languages, and standards.
+
+%In this section the techniques used to create the lobby system and the game are described, together with an account of different ways of addressing some of the problems one might encounter during web development.
+
 \subsection{Haskell}
-Haskell is a functional language most known for its static typing, pure functional style and lazy evaluation. A functional program consists of a set of declared mathematical functions. These functions have no side effects since they are only evaluated by the arguments which are given to them and cannot be influenced by any outside unpredictability like reading from OS.
+Haskell is a pure functional language with static typing and lazy evaluation. A functional program consists of a set of declared mathematical functions. These functions have no side effects since they are only evaluated by the arguments which are given to them and cannot be influenced by any outside unpredictability like reading data from the operating system.
 
-Handling side effects, or more generally computational contexts is done by using monads. For programmers unfamiliar with the concept, at a first glance it might seem like an unnecessary obstacle which is a by product of the language being fully functional. Of course there are many benefits of using monads, one obvious being that it effects the type system in a positive way. Because monads are explicitly seen in the type system the programmer can now at a glance see which code runs under what computational context. This of course makes impure from pure functions obvious. This allows for much easier testing of pure functions with tools like QuickCheck, to ensure that the logical part of the program works correctly.
+Handling side effects, or more generally computational contexts, is done by using monads. For programmers unfamiliar with the concept, it might seem like an unnecessary obstacle which is a byproduct of the language being fully functional. There are many benefits of using monads, one being that it affects the type system in a positive way. Because monads are explicitly seen in the type system, the programmer can now at a glance see which code runs under what computational context. %Since pure and impure code is explicitly separated testing of pure functions with tools like QuickCheck is easier, to ensure that the logical part of the program works correctly.
 
-Being a statically language means that all types are resolved at compile time instead of run time like in a dynamically typed language. This has the obvious drawback of the programmer having to explicitly declare every type, thus making it less suitable for quick prototyping. But one also has to consider the great benefits, mainly that trivial bugs can be caught at compile time. Knowing types at compile time also allows the compiler to do various optimization otherwise not possible. The size of the compiled binaries also tend to become smaller and run more quickly because code for checking types during run time can be omitted.
+Being a statically typed language means that all types are resolved at compile time instead of run time as it would have in a dynamically typed language. Static type checking brings benefits, mainly that trivial bugs can be caught at compile time. Knowing types at compile time also allows the compiler to do various optimisation otherwise not possible. The size of the compiled binaries also tends to become smaller and run more quickly because the code for checking types during run time can be omitted.
 
-Haskell also offers very compact syntax, and combined with the type notations allows complex code to be expressed much more clearly. The clarity and reduced size of the code makes it easier to digest functionality when reading new code. There is much data supporting the fact that Haskell programs tends to be a lot more concise and smaller than common object oriented and imperative programs. There exists a proportional relationship between the number of bugs and lines of code, generally independent of what language used. This naturally concludes that experienced Haskell programmers tend to be more productive.
+Haskell also offers very compact syntax, which allows complex code to be expressed clearly. The clarity and reduced size of Haskell code make it easier to digest functionality when reading Haskell code. There is data supporting the fact that Haskell programs tend to be a lot more concise and smaller than common object-oriented and imperative programs \cite{hudak1994haskell}. In addition, there exists a proportional relationship between the number of bugs and lines of code \cite{mcconnell2004code}, generally independent of what language is used. The brevity of Haskell and the relationship between lines of code and bugs could mean that experienced Haskell programmers tend to be more productive.
 
-
+\subsection{JavaScript}
+\label{sec:javascript}
+JavaScript is a high-level, dynamic and interpreted language which is standardised by the EcmaScript specification \cite{flanagan2011javascript}. Furthermore, it is supported by all major web browsers that are used today; this has made JavaScript a very popular language. However, despite its popularity, JavaScript still has several shortcomings. According to Ekblad, JavaScript suffers from several problems, including bad scoping semantics, weak typing, and poor support for the functional paradigm \cite{ekblad2012towards}. 
 
 \subsection{Haste}
-When writing client side applications the programmer often does not have a lot of choice, it nearly always boiles down to JavaScript. Without going into a deeper discussion on why JavaScript has come to dominate the web, this subsection will focus on the Haskell to JavaScript compiler - Haste.
+Haste is a Haskell to EcmaScript compiler developed by Anton Ekblad, a Ph.D. student at Chalmers University of Technology. However, as described in section \ref{sec:javascript}, the most common implementation of EcmaScript is JavaScript, therefore when referring to the output of Haste from now on only the term JavaScript will be used. Haste is based on the Glasgow Haskell Compiler (GHC) \cite{ghc-compiler} because the bulk of the work that goes into improving the Haskell language is implemented in GHC. GHC also includes many language extensions that are widely used today \cite{ekblad2015seamless}. Because Haste relies on the GHC compiler, it can make use of almost all of the optimisations the GHC makes to Haskell code before converting the code to JavaScript. In addition, Haste is integrated with the Google Closure Compiler. The Google Closure Compiler is a JavaScript-to-JavaScript compiler that minimises and optimises the code \cite{google-closure}.
 
-Because JavaScript is so popular the answer to why anyone would write a compiler targeting it is obvious. Besides being popular there are a lot of features JavaScript as a target languages offers compared to more regular
-intermediate languages like the JVM. JavaScript has a high abstraction level thus enabling a lot of Haskell functions to be translated directly to a JavaScript counterpart. When compiling to JavaScript one could also make use
-of the run time functionality like the garbage collector.
-
-Haste aims to produce lightweight and optimized code. Although it is based
-on the GHC compiler it does compromise with GHC support in cases where performance would otherwise suffer. This is a notable
-difference compared GHCJS, which primary focuses on being fully compatible with GHC.
-
-
+One of the primary aims for the Haste compiler is to produce lightweight and optimised code. Because of this, Haste does not support everything the GHC compiler does. Instead, Haste makes some compromises in order to perform optimisations of the generated code \cite{ekblad2015seamless}.
 
 \subsection{Haste.App}
-\todo{Antar att denna paragrafen ska bort?//Tejp}Haste.App is described in more detail and how it differs from the traditional way of writing client server applications.
+Haste.App is a library compatible with the Haste compiler, used for writing network applications. Some properties make Haste.App different in comparison to the traditional way of writing client-server applications. 
 
-Haste.App is a library compatible with the Haste compiler, used for writing network applications.
-There are a number of properties that makes Haste.App different in comparison to the traditional way of
-writing client-server applications:
+Probably the most notable difference is that both the client and server logic is written in the same program. This allows for an extension of the powerful type system over the network. Haste.App makes it possible at compile time to verify that the type of data the client or server send and receive are correct. It is also easier to move functionality from the client to the server and vice versa.
 
-Maybe the most notable difference is that both the client and server logic is written in the same program.
-This allows for an extension of the powerful type system over the network. It is now possible in compile time
-to verify that the type of data the client or server send and receive are correct. It is also easier to
-move functionality from the client to the server and vice versa.
+Another significant feature of Haste.App is the abstraction of network communication. The programmer does not have to write the communication between the client and server explicitly. Instead of calling a function to send data over the network, the client can call the function on the server directly using special constructs, the combination of the \textit{remote} and \textit{onServer} functions. Functions that are called over the network in this way are always synchronous, which means that the client will wait for a response from the server before continuing the execution of the program. The abstraction of network communication is implemented using WebSockets in Haste.App \cite{a-distributed-haskell-for-the-modern-web}.
 
-Another important benefit of Haste.App is the abstraction of network communication. It is no longer
-necessary for the programmer to write the communication between the client and server explicitly. This
-of course relives the programmer from having to do this repetitive and error prone task. This will hopefully
-have positive effects on productivity but also the correctness of the application.
+Having all the logic in one program might seem to blur the distinction between the code executed on the client or server, but a separation is achieved using the Haskell type system. The code that is only executed on the server is wrapped in the \textit{Server} monad and the client code is similarly wrapped in the \textit{Client} monad. Both monads are instances of the \textit{IO} monad. % The \textit{Server} and \textit{Client} monads are mainly \textit{IO} monads.
 
-In a more traditional setting, the client and server logic has to be written in two separate applications. And of course as
-contrary to the Haste.App feature, the communication is also needed to be written explicitly by the programmer. Except being
-a burden to the programmer, it is also a potential source of new bugs.
+Uniting the client and server code also requires a different way of compiling the program. The code is first compiled with GHC, which generates the binary that is executed on the server. After GHC is done, the code is compiled with Haste which produces the JavaScript code that runs on the client. 
 
-Having all the logic in one program might seem to affect what code is actually executed on the client or server side, but
-a separation is achieved using the Haskell type system. The code that should only be exectued on the server is wrapped in the
-Server monad, and the client code is similarly wrapped in the Client monad.
+A simple example of Haste.App can be seen in \cref{fig:haste-app-example}. The \textit{main} function starts the app by creating a list variable containing names of the connected clients, wrapped in a concurrent \textit{MVar} context, which is used as the server state. The \textit{MVar} is lifted into the Server context which tells Haste.App that it should only be available to the server. Also, in the main function the \textit{connect} and \textit{countClients} functions are wrapped in a remote context to enable them as RPCs. Being remote means that the function exists on the server but can be accessed by the client through a \textit{onServer} call. Following the creation of the remote function, the client code begins, it prompts the client for a name, calls the \textit{remoteConnect} to add the acquired name to the servers state. It then calls the \textit{remoteCountClients} function and receives the number of connected players which is then displayed to the client. 
+\begin{figure}[h]
+    \centering  
+\begin{lstlisting}  
+-- Entry point for both the Server and Client.
+main = runApp defaultConfig $ do
+  -- Mvar is a synchronized variable
+   clients <- liftServerIO $ newMVar []
 
-Uniting the client and server code also requires a different way of compiling the program. The program is first compiled
-with GHC which generates the the binary that will be executed on the server. After GHC is done, the program is compiled with
-Haste which produces the JavaScript code that will run on the client side.
+   -- Create the remote functions which the
+   --   client can call and execute on the server
+   remoteConnect <- remote $ connect clients
+   remoteCountClients <- remote $ countClients clients
 
-Haste.App also uses synchronous communication in contrary to the more regularly used asynchronous callbacks.
-This gives a more linear program flow allowing to easier reason about about the execution of the program.
+    -- Here client only code begins
+   runClient $ do
+      name <- prompt "Hello! Name please!"
+      -- <.> applies name as parameter to the remote function
+      onServer $ remoteConnect <.> name
+      nbrOfClients <- onServer $ remoteCountClients
+      alert ("Hello number " ++ show nbrOfClients)
+
+-- | Add clients nick to server state i.e. the list of names
+connect :: Server (MVar [String]) -> String -> Server ()
+connect remoteClientList name = do
+  clients <- remoteClientList
+  liftIO . modifyMVar_ clients $ \cs -> return $ name : cs
+
+-- | Count clients which are and have been connected
+countClients :: Server (MVar [String]) -> Server Int
+countClients remoteClients = do
+  clients <- remoteClients
+  clientList <- liftIO $ readMVar clients
+  return $ length clientList
+\end{lstlisting}
+    \caption{Simple Haste.App example that stores your name on the server and displays how many clients have entered to the connecting client.}
+    \label{fig:haste-app-example}
+\end{figure}
 
 \subsection{DOM}
-DOM or Document Object Model is a convention for representing certain types of documents, such as HTML. It allows for HTML pages to be written in a hierarchical tree-like manner and it allows for programs to interact with the contents of the page in order to create interactive websites. The DOM in form of HTML can be created in various ways: In a separate file where raw HTML is accepted, the DOM created in the file can then be read by the program and interacted with. It can also be created directly using JavaScript or, in the case of this project, Haste. Another approach is using some external library created for use in with Haste to create DOM.
+DOM or Document Object Model is a standard for representing certain types of documents, such as HTML. It allows for HTML pages to be written in a hierarchical tree-like manner and it allows for programs to interact with the contents of the page to create interactive websites. HTML, or HyperText Markup Language, is the standard for creating web pages.
+
+The DOM in the form of HTML can be created in various ways: In a separate file where raw HTML is accepted or it can also be created directly using JavaScript or, in the case of this project, Haste. Another approach is using some external library created for use with Haste to create DOM. 
+
+\subsection{SQL \& MySQL}
+Structured Query Language (SQL) is a domain specific language designed to interact with a relational database management system (RDMS). In an RDMS data is stored in tables where each table is organised into columns and rows. Columns represent which type of data may be retained in the table and the list of rows represent the data stored in the table. MySQL is an open source implementation of most parts of the SQL standard. Its main features are the ability to handle large amounts of data and that it is relatively easy to setup \cite{mysql-features}.
+
+\section{Method}
+\label{sec:method}
+To reach a conclusion regarding the purpose of the project a number of methodologies and ways of evaluating performance, programmer productivity, and stability have been used. An application was written with Haste.App to assess the purpose of the project. Specifically, a Lobby system for games was developed together with an implementation of the game Chinese Chequers. Further evaluation was based on observations and tests performed during or after the creation of the application. How the assessment of these areas of interest was done is discussed in more detail below. 
 
 
-\subsection{Dependencies}
-\todo{Hör dependencies hemma under technical background? Det är väll mer ett problem vi stötte på under utvecklingen av lobbyn som vi löste.}
+\subsection{How to measure performance}
+\label{sub:method-performance}
+Several different aspects needed to be taken into account to assess the overall performance of the application. Most notably, the speed of the application was measured. Because the application is hosted on a web page, there were primarily two metrics to be considered when measuring its speed. The amount of bandwidth sent between the server and the client and how much system resources were used by the application. Different methods of measuring system resources were used on the client and the server.
+
+The bandwidth needed by the application was divided into two parts, the bandwidth required to transfer the JavaScript to the client from the server, and the bandwidth required when a client is using the application. This data was compared to other sites offering similar content to assess if the application requires a reasonable amount of bandwidth for what it does. Measuring the initial bandwidth was done by measuring the size of the generated JavaScript. Moreover, the bandwidth required during the connection was measured via \textit{Wireshark} \cite{wireshark-website}, a tool for monitoring network traffic.
+
+The system resources used by the application on the server-side are defined by the CPU-usage, load average, network utilisation, and the amount of RAM required. To monitor these values the resource monitoring tool \textit{munin} \cite{munin-website} was used. On the client-side, on the other hand, performance was measured by looking at the total CPU time used by the JavaScript.  The web browser Chrome was used together with its built-in developer tools to measure the total CPU time
+
+To test the performance of the server when there are many clients connected and interacting with the website a couple of scripts were written with the help of the Ruby framework \textit{Watir}. The framework allows a script to interact with the DOM elements of a web page. \textit{Watir} made it possible to simulate connected clients and at the same time monitor the CPU and memory on the server to quantify how much of these resources were used when that number of clients were connected.
+
+\subsection{How to measure stability}
+
+To measure the stability of the developed application, it was decided that a number of states should be monitored to make sure they were resistant to unrecoverable errors. An unrecoverable error is an error that cannot be handled by the application and forces a reset of the application state. The states were: 
+\begin{enumerate}[noitemsep]
+    \item When the server gets updated/restarted during an active session.
+    \item If the client has outdated JavaScript when trying to communicate with the server.
+    \item Runtime errors on the server.
+    \item Runtime errors on the client JavaScript.\\
+\end{enumerate}
+
+The first state was decided to be monitored as it is common that an update has to be made to the server. Preferably it should be possible to perform such an update without crashing the connection. It could also be the case that the server crashes. In the event of such a crash, it would be preferable if the server could restart without the clients noticing the crash.
+
+The second state was monitored since the source code is compiled twice, once with Haste and once with GHC. Because it is compiled twice, it is easy to accidentally only update one of the two compiled sources. When this happens, either the client or the server can receive an unexpected value and may crash.
+
+The third state was considered because Haste.App can potentially cause crashes on its own as it is a new library. Since it is a new library, it was important to measure if these issues were a problem. While crashes can occur based upon logical errors, such crashes were not taken into account. 
+
+The final state was also considered since Haste is a relatively new library. Once again, what was primarily considered are crashes caused by Haste.App or Haste, since logical errors will be present regardless of the framework. In the client JavaScript, however, there is another dimension compared to runtime errors on the server since the JavaScript is compiled with the Haste compiler. 
+%The stability of the application was primarily measured by the amount of unrecoverable errors that occurred on either the client or the server. For the application to be considered stable such errors can not happen frequently. These errors can occur during a variety of states that the system has to be resistant to: when the server gets updated during an active session, if the client has outdated JavaScript when trying to communicate with the server, runtime errors on the server, runtime errors on the client JavaScript.
+
+
+
+\subsection{How to measure programmer productivity}
+\label{sub:method-programmer-productivity}
+Assessing the programmer productivity of using Haste.App was difficult. Initially, it might seem like a very subjective criterion, and it partly is, but there were further aspects taken into account when measuring programmer productivity. What was considered were errors present in Haste and Haste.App, possible effects of the client-centric and linear programming model of Haste.App, if the strong static type system of Haskell has any effects, and comparing the lines of code with other similar applications.
+
+To start with, looking at errors present in Haste and Haste.App was an important aspect. Since Haste is on version 0.5.4 during writing, there may be some prominent issues in both Haste and Haste.App, which would have to be worked around during development. They would be detrimental to programmer productivity.
+
+The client-centric and linear programming model of Haste.App is another interesting aspect. Since this programming model differs to traditional web development \cite{ekblad2015seamless}, it was an important aspect to consider and assess the effects off. The developer of Haste.App claims that this programming model makes the program flow easier to grasp \cite{ekblad2015seamless} and as such it would have a positive effect on programmer productivity.
+
+Moreover, programmer productivity can also be affected by the strong static type system of Haskell. It is considered in respect to if it reduces the number of hard-to-find errors in the code. Since Haste.App also allows this type system to be extended over the network communication, aspects regarding errors in network communication are also considered. 
+
+Finally, the development of the application in this project was compared to other similar applications. Other applications were examined because the difference in programmer productivity can be measured by the lines of code required for that implementation. Lines of code is an important aspect since it plays into the maintainability as well as the development time.  %Assessing the programmer productivity of writing client-server applications using Haste.App was mainly about the effort put into writing the program. One crucial aspect in programmer productivity was assessing whether or not the strong static type safety of Haskell reduces the number of hard-to-find errors. The programmer productivity is also heavily influenced by errors present in Haste (not very likely) or Haste.App (more likely). It may also be influenced by the client-centric and linear programming model of Haste.App as it claims to make the flow easier to grasp \cite{ekblad2015seamless}. It was, however, hard to measure the programmer productivity. One metric that was considered was if the application is completed faster than estimated in this report. Another metric was to gather data about how long it has taken others to write similar applications using a different programming model.
+
+%\todo{Concrete way to measure programmer productivity?}
+
+\subsection{An application to measure Haste.App}
+To accurately assess Haste.App an application was developed in two parts, a lobby system and game. These two parts were chosen because they could be used to look at different areas of the problems described in \cref{sec:problem}. What follows is a brief description of the different parts as well as what problems they illustrate.
+
+\subsubsection{Lobby system}
+The lobby was decided to be a system where connected clients can start conversations with each other and create their own session of the game. When creating a new session other clients are able to join until it gets full or until the creator starts the game, thus enabling games to be played. 
+
+A lobby system was created to assess scalability and performance of Haste.App. The scalability and performance was to be tested through the lobby since it does not have an upper limit of connected clients or concurrently active games. The aim was to find, if it exists, a correlation between performance and connected clients. Another important benefit of developing a Lobby system was thorough testing of programmer productivity when working with Haste.App since it would be possible to test various libraries for common web development purposes.
+
+\subsubsection{Chinese Chequers}
+\label{sub:chinesecheckers}
+To test more of the performance and continuous communication between clients aspects of Haste.App a board game was implemented. Chinese Chequers was chosen for its simplicity since Haste.App might not yet be suitable for dealing with demanding real-time applications.
+
+Chinese Chequers is a turned based board game available for two, four or six players. The rules are fairly simple. Each player is assigned pieces of one colour. In order to win a player has to move all pieces of the player's colour to the opposite side of the board. The six moves a player can make are shown in \cref{fig:chequers-move}, they are: moving horizontally down to the left or right, or vertically. A player may only move their piece to either one of those positions if they are empty. In case a position that can be moved to is occupied, it can be jumped over. Jumping over a piece makes the player eligible to move that piece by jumping over another piece again.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figure/moves}
+    \caption{Showing all possible moves with a chequer.}
+    \label{fig:chequers-move}
+\end{figure}
+
+\section{Development}
+The process of development was split into two parts: the game and the lobby system, which where developed in parallel. This section describes how the development was performed and crucial decisions which had to be made along with other important issues that had to be solved.
+
+\subsection{Dependency Management Using Haste.App}
 \label{sub:dependencies}
-% Vilket probem vi har med att haste inte kompilerar ghc bibliotek och hur vi hanterar det.
-Like any other project, hastings have dependencies on external libraries. Since the project is compiled using two compilers, haste and ghc, one could imagine that haste should be able to compile anything which ghc can. This is not the case. Since haste compiles the client code and ghc compiles the server, the question boils down to: How can we continue using haskell libraries in our Haste.App application but make sure only the ghc compiler is aware of it? Looking at hastings an example can be made of the relation between \textit{Main.hs}, which needs to be compiled with both ghc and haste, and \textit{LobbyServer.hs} and \textit{LobbyClient.hs} which need to be compiled by ghc and haste respectively.
-\textit{Main.hs} needs to import both \textit{LobbyServer.hs} and \textit{LobbyClient.hs}. To solve this the following definitions from the C language has been made in \textit{Main.hs}:
-\begin{lstlisting}[language=C]
+Since an application in Haste.App is compiled using two compilers, GHC and Haste; this presents some problems when using some external libraries because Haste does not support everything GHC supports. To solve this problem, conditional compilation was used, which enables the programmer to tell the compiler to ignore certain parts of the code when, for example, compiling for a particular platform or by a specific compiler. An example of how this was done is shown in \cref{fig:dependencies-definitions}.
+
+\begin{figure}[h!]
+\begin{lstlisting}
 #ifdef __HASTE__
 import LobbyClient
 #define disconnect(x) (\_ -> return ())
@@ -158,332 +363,858 @@ import LobbyServer
 #define clientMain (\_ -> return ())
 #endif
 \end{lstlisting}
-Here it is stated that if '\_\_haste\_\_' is defined i.e. haste is compiling then only import \textit{LobbyClient}, but also make a dummy definition of the \textit{disconnect} function. This since the real disconnect function is defined in \textit{LobbyServer.hs}. Likewise if '\_\_haste\_\_' is not defined i.e. ghc is compiling. Therefore only import \textit{LobbyServer} and make a dummy definition of the \textit{clientMain} function which actually is defined in \textit{LobbyClient.hs}. This specific case was needed since the \textit{Data.UUID}, which is a package haste cannot compile, was desiered to be used. This makes the server able to generate UUIDs.
+\caption{Definitions made to work around dependency problems.}
+\label{fig:dependencies-definitions}
+\end{figure}
 
-In general, if a Haskell library, which haste can't compile, is desired to be utilised on the client side then the server would need to provide it through a remote function and return it in some data type which haste can handle.
+In \cref{fig:dependencies-definitions} it is stated that if '\_\_HASTE\_\_' is defined i.e. the code is compiled by the Haste compiler, import \textit{LobbyClient}, but also make a dummy definition of the \textit{disconnect} function, since the actual disconnect function is defined in \textit{LobbyServer}. Likewise, if '\_\_HASTE\_\_' is not defined i.e. GHC is compiling, import only \textit{LobbyServer} and make a dummy definition of the \textit{clientMain}.
 
-
+In general, if a Haskell library which Haste cannot compile is desired to be utilised on the client-side then the server needs to provide it through a remote function and return it in some data type which Haste can handle.
 
 \subsection{Updating the client}
 \label{sub:updating-client}
 % Issues encountered when trying to update the client when a state change has happened on the server.
-In traditional client-server programming there are multiple ways for the server to notify the clients on changes to the server. The client can, for example, listen to changes via Websockets or Server sent events. The programming model of Haste.App, however, prevents this type of communication. The programming model is meant to be linear and client-centric so the client has to initiate all communication. This leaves two methods: Creating a process client-side that asks the server for some state it wishes to update, or creating a synchronous channel that the server can write to and the relevant clients can read.
+During the development, there was an issue with updating the client when a state change occurred. For example, when a client connects to the server all other clients should be notified. Since Haste.App is client-centric, the client has to be the one to initiate communication with the server. To solve this problem, two methods were considered. The first method works by reading a state from the server and then updating every couple of seconds. The second method instead uses a synchronous channel at the server that the server can write to and client read from to notify the client of an update in state.
 
-The first method, reading a state from the server, is the most intuitive of the two to construct. It is also in line with the client-centric model of Haste.App, which makes the program flow easy to understand. However, this method drains unnecessary resources as it requires the client to have a process reading the state of the server every x number of seconds. Upon reading the state the process has to determine if there has been any change and then update accordingly.
+%In traditional client-server programming there are multiple ways for the server to notify the clients of changes to the server. The client can, for example, listen to changes via Websockets or Server sent events. The programming model of Haste.App, however, prevents this type of communication. The programming model is meant to be linear and client-centric so the client has to initiate all communication. This leaves two methods: Creating a process client-side that asks the server for some state it wishes to update, or creating a synchronous channel that the server can write to and the relevant clients can read.
 
-The second method, reading a synchronous channel, solves the problem with consuming resources that the other method suffers from. The method is, however, more complex in it's construction. Each client will need to have a channel for each communication purpose. Since the channels are created and kept by the server, there has to be a server method for reading each channel. Reading from the channel is a blocking operation so there will, for each channel, be a process waiting to read. Upon reading a value from a channel, through a remote call to the server, the client will need to determine what to do with the message and then update accordingly.
+The first method, reading a state from the server, is more intuitive to construct than the second. It is also in line with the client-centric model of Haste.App, which makes the program flow easy to understand. However, this method drains unnecessary resources as the client has a process reading the state of the server every couple of seconds. Upon reading the state, the process has to determine if the state has changed and then update accordingly. The method is illustrated in \cref{fig:reading-state}.
 
+\begin{figure}[h!]
 
-\section{Method}
-\label{sec:method}
-To reach a conclusion regarding the purpose of the project a number of methodologies and ways of evaluating the performance, programmer productivity and stability will be used. To evaluate if the purpose of this thesis is satisfied an implementation with Haste.App will be created. Specifically a Lobby system for games will be developed together with an implementation of the well known game Chinese checkers. Further evaluation will be based on observations and tests done during or after the creation of the software. How the evaluation of these areas of interest will be done is discussed in more detail below. Throughout the process of creating the lobby and game all comments regarding Haste and Haste.App, in particular bugs or inconveniences, will be collected and forwarded to the developer of Haste and Haste.App.
+\begin{subfigure}[]{\textwidth}
+\begin{lstlisting}[language=Haskell]
+-- Waits for an update in state to occur and then updates if it has
+listenForUpdates :: State -> (State -> Client ()) -> Client ()
+listenForUpdates oldState callback = do
+    newState <- onServer readState
+    if oldState == newState 
+        then do
+            -- if nothing has changed, wait a second before checking again
+            setTimeout 1000 $ listenForUpdates oldState callback
+        else do
+            callback newState -- Update the client in some way
+            listenForUpdates newState callBack
+\end{lstlisting}
+\subcaption{Client code, reads the state and then updates if it has changed}
+\end{subfigure}
 
+\begin{subfigure}[]{\textwidth}
+\begin{lstlisting}[language=Haskell]
+-- Simply reads the server state belonging to that client
+readState :: StateList -> Server State
+readState states = do
+    sid <- getSessionID -- gets the unique session id
+    liftIO $ do
+        case sid `lookup` states of
+            Nothing -> return emptyState -- "should not happen"
+            Just state -> return state
+    
+\end{lstlisting}
+\subcaption{Server code, returns the state}
+\end{subfigure}
+\caption{The method of reading a state from the server and then deciding if to update.}
+\label{fig:reading-state}
+\end{figure}
 
-\subsection{Performance}
-\label{sub:method-performance}
-There are several different aspects that needs to be taken into account in order to assess the overall performance of the application. Most notably, the speed of the application needs to be measured. Because the application is hosted on a web page there are primarily two metrics to be considered when measuring it's speed. The amount of bandwidth sent between the server and the client and how much system resources are used by the application, both on the server side and client side.
+The second method, reading a synchronous channel, solves the problem with consuming resources that the first method suffers from. The method is, however, more complicated in its construction. Since the channels are created and kept by the server, there has to be a function on the server for reading the channel. Reading from the channel is a blocking operation so there is, for each channel, a process waiting to read. Upon reading a value from a channel, through a remote call to the server, the client has to react to the message in some way. This method is illustrated in \cref{fig:reading-channel}. After careful consideration, this approach was decided to be used to communicate state changes in both the game and the lobby.
 
-The bandwidth required by the application can further be divided into two parts: Firstly, the amount of data that initially needs to be sent when a new client connects to the server, including all the static content as well as the JavaScript code generated by Haste. Secondly, the amount of bandwidth required during the time a player plays the game and when the player is in the lobby. This data will have to be compared to other sites offering similar content (a lobby and a game) to assess if the application requires a reasonable amount of bandwidth for what it does.
+\begin{figure}[h!]
 
-The system resources used by the application are defined by the total CPU-usage and the amount of RAM required, both on the server side and the client side. This data can however be hard to analyse since it will be heavily influenced by both the hardware of the clients and server, and how well optimised the code is. The optimisation will also be affected by how optimised the code generated by Haste will be. The data will, on the client side, be compared to other games played in a web browser.
+\begin{subfigure}[]{\textwidth}
+\begin{lstlisting}[language=Haskell]
+-- Client-side method for reading a message from the server
+listenForMessages :: Remote (Server Message) -> (Message -> Client ()) -> Client ()
+listenForMessages serverReadChannel callBack = do
+    msg <- onServer serverReadChannel -- call the server with the readChannel method
+    callBack msg -- React to the read message in some way
+                 -- Perhaps by getting a new state
+    listenForChatMessages callBack -- recurse indefinitely
+\end{lstlisting}
+\subcaption{Reads the channel (at the server) and then reacts to the message, maybe by getting new state.}
+\end{subfigure}
 
-There are also a couple of obvious observations regarding bandwidth and resources that can be made: If the game or lobby appears to be experiencing lag or large amounts of latency. If the client computer or server becomes slow to use when playing the game (which can be an indication of memory leakage).
+\begin{subfigure}[]{\textwidth}
+\begin{lstlisting}[language=Haskell]
+-- Called by a client to read its channel
+readChannel :: Server (MVar [a]) -> Server Message
+readChannel remoteClientChannels = do
+    sid <- getSessionID -- gets the unique session id
+    mVarClientChannels <- remoteClientChannels
+    liftIO $ do
+        clientList <- readMVar mVarClientChannels
+        case sid `lookup` clientList of
+            Nothing            -> return $ ErrorMessage "Couldn't find client."
+            Just clientChannel -> readChan clientChannel -- readChan is a blocking action
+\end{lstlisting}
+\subcaption{Reads the client's state, if it can be found.}
+\end{subfigure}
 
-\todo{Mention how to measure performance (maybe by using wireshark or what have you)}
-
-\subsection{Stability}
-The stability of the application is primarily measured by the amount of unrecoverable errors that occurs on either the client or the server. An unrecoverable error is an error that can not be handled by the application and forces a reset of the application state. In order for the application to be considered stable such errors can not happen frequently. These errors can occur during a variety of states that the system has to be resistant to: when the server gets updated during an active session, if the client has outdated JavaScript when trying to communicate with the server, runtime errors on the server, runtime errors on the client JavaScript.
-
-\subsection{Programmer productivity}
-Assessing the programmer productivity of writing client-server applications using Haste.App
-is mainly about the effort put into writing the program. One crucial aspect in programmer productivity is assessing whether or not the strong static type safety of Haskell reduces the number of hard-to-find errors. The programmer productivity is also heavily influenced by errors present in Haste (not very likely) or Haste.App (more likely). It may also be influenced by the client centric and linear programming model of Haste.App as it claims to make the flow easier to grasp \cite{ekblad2015seamless}. It is however hard to measure the programmer productivity. One metric to consider is if the application is completed faster than estimated in this report. Another metric is to gather data about how long it has taken others to write similar applications using a different programming model.
-
-\subsection{Lobby system}
-The main reason for using a lobby system is for communication purposes, thus allowing thorough testing of the Haste.App library because it heavily relies on client-server communication. The scalability and performance will be tested through the lobby since it does not have any theoretical upper limit of connected clients nor the number of concurrently running games. The aim is to find, if it exists, a correlation between performance and connected clients. A correlation will hopefully point out, with a decent amount of precision, when the drops in performance occur.
-
-The lobby is a system where connected clients can start conversations with each other, spectate currently active games, or create their own session of the game. When creating a new session other clients are able to join until it gets full or until the creator starts the game, thus enabling games to be played.
-
-\subsection{Chinese checkers}
-\label{sec:chinesecheckers}
-Chinese checkers is a turn based board game. Despite it's name, the game originates from Germany. The rules are fairly simple, each player is assigned checkers of one color. The goal is to move all your checkers to the opposite side
-of the board, where the holes are the same colour as your checkers. The six basics moves which you can make with a checker are: top right \& left, bottom right \& left, left, right. Of course you may only move your checker to either one of those positions if they are empty. In case some position is not empty (any checker being placed there), you can jump over that specific checker. Jumping over a checker makes you eligible to move again, though with a few requirements: you must move the same checker again and you have to continue jumping over other checkers.
-\todo{Maybe create a picture showing all the available moves, increasing the clarity significantly}
-
-The game will be relatively simple, since focus is mainly on the lobby system and the game is only an example used to test it. Chinese checkers is a turn-based game which fits Haste.App since it might not be suitable for dealing with demanding real-time applications. It is also a multiplayer game not only for two players, but up to six players making it able to test many properties of the lobby systems match making feature, and simple to test the scaling factor of the game. The game logic is simple and easy on computational requirements and therefore the server can handle more games at the same time. The purpose of the game is also to test the performance of the outputted JavaScript and the performance of the server code to help determine the suitability of Haste.App when dealing with common applications.
-
-Chinese checkers is implemented with an overview perspective, the balls are colored circles and the holes are represented by squares. The following rules applies to the implementation of Chinese checkers: The objective of the game is to move all your pieces to the opposite side. At each turn one can move a piece one step or jump over another piece. If a player jumps over a piece he can choose to gain an additional move. The first player to get all his pieces over to the opposite side wins.
-
-
-\subsection{Development}
-\todo{A lot of implementation details are mentioned in this section, maybe we should rename it to Development/Implementation or move, just an idea}
-The process of development was split into two parts: the game and lobby system, which where both developed in parallel.
-This section describes in a slightly chronological manner how the development was done and crucial decisions which had to be made.
-
-\subsubsection{Game}
-Before creating functions that apply the game rules the first thing that needs to settled is how to model the game. The $Content$ data type was created to represent what every position can actually hold: it is either $Empty$ or it has a colored checker, which is represented by the data contructor $Piece$ $Color$. The next crucial data type is $Square$. $Square$ is a product type containing a: $Color$, $Content$ and $Coord$. The $Coord$ type is simply a type synonym for $(Int,Int)$, representing the game logic coordinates. Now the game table can be defined, and it is represented by the $Table$ type. $Table$ is also a type synonym for $[Square]$.
-\todo{A lot of types are mentioned, complementing the text with a picture showing how the types are related might be good}
-
-Taking the decision to create $Coord$ and $Table$ as type synonym instead of creating new types is mainly due to having sufficient type safety in the other types. It relieves us from having to pattern match each type.
-
-It is worth mentioning that the game was intended to be developed as a two dimensional list, because it already provides natural coordinates. This would then allow for the $Coord$ type to be completely omitted. It required, however, that several basic functions that already existed for the ordinary one dimensional list, to be re-implemented for two dimensional lists. This means that choosing the one dimensional list, we could use the existing rich library of functions already available, thus potentially saving time and effort.
-
-When a solid foundation of functions implementing the game rules were created, it was time to test the functions. Our primary source for finding bugs was QuickCheck. Besides QuickCheck, functions for playing the game from stdio was also created. This allowed us to play the game from a terminal, thus together with QuickCheck verifying the correctness before moving on to creating the graphics.
-
-When the game-logic seemed to be done, it was time to temporarily leave the world of pure Haskell and to actually start using Haste. Concerning the game development, Haste will only be used to generate the graphics and to add interactive functionality. This will of course be translated to JavaScript and run och the client side.
-
-It was decided that the physical holes in the game would be represented as squares that have a content in it. A content can be either empty or a piece. A Square has also a color to represent the target for the pieces with the same color. Lastly Squares has a coordinate in the Cartesian coordinate system which is partly to distinguish the squares from each other and partly to draw them at the right place.
-
-Except for a game table, a way to represent the current state of the game, eg. current player, table etc is also necessary. For this purpose the $GameState$ type was created. $GameState$ contains the following: a $Table$ holding the current game table, $Players$ which is of type $[(Player,Color)]$ containing all the active players with their respective color, $CurrentPlayer$ representing the current player and is of type $Player$, $MoveAgain$ which is of type $Bool$ used for check if the player if the current player can move again. $Player$ is just a type synonym for $String$.
-
-The $Players$ entry in the $GameState$ type is implemented as a regular queue, meaning that the next player is the head of the list and the current player is put last in the list.
-
-The caller who wants to start a game does not have to worry about any initializing of the $GameState$, it only requires a list of player names. Based on the length of that list the correct game table is chosen (removing the checkers not in use), and unique colors for each player is also assigned.
-
-QuickCheck has mostly been used to test the game logic functions. $Square$ and $Content$ was made instances of arbitrary. This enables us to generate completely random game tables. $Content$ also uses frequency to less frequently generate $Empty$ data.
-
-
-
-Graphics
-The physical checkers and holes were represented by colored circles and white circles. The board however was drawn black to clearly view the holes (see figure x). The graphics in (figure x) was all drawn by using the basic draw and fill functions available in the Haste library. Since the graphics looked primitive and extremely outdated, it was determined that the graphics would be upgraded to represent the physical checkers and holes as images (see figure y). These images were imported bitmaps which will be hosted on the server.
-\todo{Add a picture comparing the graphics of the old and new game and explaining differences etc.}
-
-To show when a checker is marked, it was determined that it was clearer and looks nicer to high-light a checker by changing the brightness and the contrast instead of drawing a circle around it.
-
-The game required a rotate button for a player to be able hand over his turn to the next player. This button is only used if a player jumps over a checker or if the player decided to not move during its turn, otherwise the game rotate player automatic.
-
-All the interaction with the game is done via the canvas on which the game table is drawn. This of course calls for an on click functionality which was
-implemented in Haste with ease. The code which drives the game is thus executed upon clicking the canvas. Firstly, the actual clicked coordinates relative the canvas are parsed to represent the game logic coordinates. The game state is stored in a MVar and is only accessed when clicking on the canvas.
-
-After the game logic and graphics were done the remaining part was to integrate the game with the lobby. Each client has their respective GameState stored locally. Changes done to the local state is communicated to the rest of the clients through a channel received by the server. The channels used were from the Control.Concurrent package. The server does only handle sending the information received from one channel to all the other client so they can update their state respectively.
-
-To avoid sending the whole game state over the network the new data type GameAction was created. GameAction represents each of the possible manipulations a client can do to their local game state. After making a change to the current game state a client sends the proper GameAction data constructor. Upon receiving the GameAction the other clients parse it and make the necessary changes to their local game states.
-
-The previous main functions used for drawing the game and added the onClick functionality now has to be recreated as a function, namely drawGame. drawGame will be called from the clients main function. The ChineseGraphics file was also
-made a module, for enabling it to be imported to the client side application.
-
-The previous main function did not take any arguments. When transforming the main function to drawGame this now has to be changed. Perhaps the two most notable argument changes related to integrating it with the lobby is
-adding a div argument and a channel. This means that the lobby gives clients a div where the game related graphics can be drawn. The lobby also supplies the game with a channel where it can send the GameAction commands based on what move the client made.
-
-The channel will be written when the client makes a move, thus the code will be placed inside the onClick functionality. This part is where trouble started occurring when using the Haste compiler. The MVars from the Control.Concurrent package has been used without a flaw inside the onClick function, but the channels from the same package did not behave well. Writing to a channel works fine, but any other operation such as reading, checking if the channel is empty etc. did not work. The application simply crashes when using any of those operations. This is unfortunate since the Haste.Concurrent package does not contain any channels nor an intuitive substitute.
+\caption{The method of reading a synchronous channel.}
+\label{fig:reading-channel}
+\end{figure}
 
 
+\subsection{Development of the game}
+\label{sec:game-development}
+This section describes the rule set that was implemented in the game, and the technical implementation. It also illustrates the choices taken during the development of the game sequentially.
+
+\subsubsection{Implementation of the game rules}
+\label{sec:game-rules}
+The diagram in figure \ref{fig:flowchartGame} describes the actions a player can make. After a jump the game automatically moves to the next player but when a double jump is made it is possible to move again as seen in the flowchart, but only with the same chequer. In this implementation of the game it is also possible to rotate the current player without moving a chequer. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.1,width=0.4\textwidth]{figure/flowchartGame}
+    \caption{Displaying all possible actions a player can make within the game.}
+    \label{fig:flowchartGame}
+\end{figure}
+
+\subsubsection{Game logic and data types}
+%Before creating functions that apply the game rules, the first thing that needed to be settled was how to model the game. 
+
+%During the implementation of the game a number of design choices and decisions were made. Here these choices are illustrated in a sequential manner. 
+
+The $Content$ data type was created to represent what every position can hold: it is either $Empty$ or it has a coloured piece, which is represented by the data constructor $Piece$ $Color$. The next crucial data type is $Square$. $Square$ is a product type containing a: $Color$, $Content$ and $Coord$. The $Coord$ type is simply a type synonym for $(Int,Int)$, representing the game logic coordinates. With the help of these types the game table could be defined, and it is represented by the $Table$ type. $Table$ is also a type synonym for $[Square]$. Figure \ref{fig:gameTypes} illustrates the hierarchy in which the types depend on each other together with their definitions.
+
+\begin{figure}[h!]
+    \centering
+\begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[scale=0.8,width=0.8\textwidth]{figure/gameTypesHierarchy}
+    \caption{Visualisation of the game data types hierarchy. The root of the tree is the \textit{GameState}.}
+\end{subfigure}
+~
+\begin{subfigure}{\textwidth}
+\begin{lstlisting}
+data Content = Empty | Piece Color
+
+data Square = Square Content Color Coord
+
+type Coord = (Int,Int)
+
+type Table = [Square]
+
+type Player = String
+
+data GameState = GameState { gameTable       :: Table
+                           , currentPlayer   :: String
+                           , players         :: [(String,Color)]
+                           , fromCoord       :: Maybe Coord
+                           , playerMoveAgain :: Bool }
+\end{lstlisting}
+    \caption{The Haskell data types that are used in the game}
+    \end{subfigure}
+    \caption{Illustration of the data types that are used in the game}
+    \label{fig:gameTypes}
+\end{figure}
+
+%Implementing $Coord$ and $Table$ as type synonyms instead of creating new types is mainly due to having sufficient type safety in the other types. It relieves from having to pattern match each type.
+
+%The game table was intended to be developed as a two-dimensional list because it already provided natural coordinates. This would then allow for the $Coord$ type to be completely omitted. It required, however, that several basic functions that already existed for the ordinary one-dimensional list, to be re-implemented for two-dimensional lists. This meant that choosing the one-dimensional list, we could use the existing rich libraries of functions already available, thus potentially saving time and effort.
+Furthermore, a way to represent the current state of the game was needed, and therefore the $GameState$ type was created. $GameState$ contains the following: 
+\begin{itemize}
+    \item A $Table$ holding the current game table.
+    \item The field $Players$ which is of type $[(Player,Color)]$ containing all the active players with their respective color implemented as a regular queue.
+    \item $CurrentPlayer$ representing the current player and is of type $Player$.
+    \item $MoveAgain$ which is of type $Bool$ used for checking if the current player can move again.
+    
+\end{itemize}
+$Player$ is just a type synonym for $String$. The $GameState$ is thus holding all information about a game session and is the root of the type tree in figure \ref{fig:gameTypes}. Each client stores their $GameState$ locally in an $MVar$.
+
+%It was further decided that the chequers should be drawn as coloured circles and the empty squares as white circles. The board, however, was drawn black to clearly view the holes (see figure x). The graphics in (figure x) was all drawn by using the basic draw and fill functions available in the Haste library. Using these functions made the graphics look primitive and outdated. They were therefore replaced by using images as graphics, as seen in figure \ref{fig:gameGraphics}. 
+%The images are just imported bitmaps, and are hosted on the server.
+%\todo{Add a picture comparing the graphics of the old and new game and explaining differences etc.}
+
+\subsubsection{Graphical implementation}
+\label{sec:graphimpl}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.8,width=0.6\textwidth]{figure/game}
+    \caption{The resulting game graphics.}
+    \label{fig:gameGraphics}
+\end{figure}
 
 
-\subsubsection{Lobby system}
+%To show that a chequer is selected, a highlighting effect was added. The effect was implemented by changing the brightness and contrast of the original bitmap pictures. 
+
+%The graphics of the game are implemented by using bitmaps, the bitmaps are hosted on the server. A highlighting effect was achieved by using the original chequer bitmaps and changing their contrast and brightness. 
+Haste provides a library for drawing and filling regular geometrical figures, but using these functions only achieves a pretty outdated graphical look. A decision was made to use bitmaps, which are just pictures that can be rendered on the screen. This gives a more modern graphical look, as seen in \cref{fig:gameGraphics}. Furthermore, a highlighting effect was achieved by using the bitmaps and changing their contrast and brightness. 
+
+
+Upon clicking on the screen to interact with the game, the input coordinates need to be parsed to represent game logic coordinates. There were issues with generating the correct input coordinates when using the function supplied with Haste. To solve the coordinates issue, the FFI for getting the canvas position on the screen was needed. The FFI is used to call JavaScript directly from Haskell. Knowing the canvas position, the correct input coordinates could be calculated. 
+
+%The highlighted bitmaps are not always rendered on the canvas, and it seems to be arbitrary when the rendering starts. 
+%It is assumed that the issue related to rendering the highlighted bitmaps are caused by a bug in the Haste compiler.
+
+
+%The game also required a rotate button for players to be able hand over their turn to the next player. This button is only used if a player jumps over a checker or if the players decide to not move during their turn, otherwise the game rotates player automatically.
+
+%All the interaction with the game was decided to be done via the canvas on which the game table is drawn. 
+%This of course calls for an on-click functionality which was implemented in Haste with ease. 
+
+\subsubsection{Network communication}
+The first approach to communication between the client and server was to let the server give each client channels, from Haskell's $Control.Concurrent$ package. They did not work with Haste though, which seemed strange since the $MVars$ from $Control.Concurrent$ had been used without a flaw.
+
+The issue regarding the channels was solved by only reading and writing to the channels on server-side. The client simply requests the server to read or write to the channels located on the server. Using the channels from $Control.Concurrent$ works on server-side because the code is compiled only with GHC. Updating the client is described in more detail in \cref{sub:updating-client}.
+
+As mentioned in \cref{sec:graphimpl} interaction with the game is done via the graphical game table, which upon clicking parses the coordinates. These coordinates are wrapped in a $GameAction$ type and sent to the server which broadcasts this message to all active clients. Upon receiving the $GameAction$ each client parses it and calls a function for updating the local game state.
+
+The $GameAction$ type was created to avoid sending the whole $GameState$ over the network, and it represent each possible manipulation a client can make to the local $GameState$. The definition can be seen in \cref{fig:gameAction}, and the data constructors are self explanatory.
+
+Verifying that a move is valid is only done on client-side. This is an issue regarding the safety of the game. This allows for client-side manipulation of the code, which could make illegal moves possible. Doing the verification on server-side was left out mainly due to limited amount of time. 
+
+
+\begin{figure}[H]
+\begin{lstlisting}
+data GameAction = StartGame 
+                | RotatePlayer 
+                | GameActionError String 
+                | Coord (Int,Int)
+\end{lstlisting}
+    \caption{Illustration of the data types that were used in the game}
+    \label{fig:gameAction}
+\end{figure}
+
+%Another possible improvement to the game, which was not implemented, is to show all possible chained moves that a piece can do when highlighting it. This then removes the burden for the player to step through the whole path one move at a time. This was chosen not to be implemented because it introduces more complexity than necessary to the game. 
+
+\subsection{Development of the lobby system}
+\label{sub:lobby-development}
+This section serves to describe the implementation of the lobby system. It describes the technical implementation and issues encountered along the way. After that it describes the data types of the lobby and why they are constructed as they are.
+
 %development of the lobby
-The development of the lobby system started out straight forward. The first goal was to create a system that allowed for players to enter the lobby, create a game and then start that game when enough people had joined. It should also be possible to see which games are active and who the other players in the lobby are. This might sound simple enough, but this proved to be somewhat more complex than first anticipated.
 
-The problem with updating the client was quickly encountered as players join the lobby and start games continuously. The methods discussed in \cref{sub:updating-client} were evaluated and while the first method was initially used, the obvious advantages of the second method soon made the group switch to creating several channels, one for each type of communication, on which messages could be sent to the client to notify it of a change in state.
+\subsubsection{Lobby implementation}
+The development of the lobby system started out straightforward and was divided into three milestones:
+\begin{enumerate}
+    \item Client does a handshake connection with server to enter the lobby.
+    \item Create a game and start it when enough people have joined.
+    \item Implement a chat to enable communication between players.
+\end{enumerate}
+These goals might seem simple enough but they include other small issues. To only mention a few features, a client should be able to see which games are active, who the other players in the lobby are, as well as change their own name, and edit settings of a game they own. Here a couple of important decisions taken during the development are described.
 
-Dependencies with GHC and Haste was also a problem that was encountered early in development. This problem with dependencies is discussed in \cref{sub:dependencies}. In order to give the games a unique identifier it was decided to use the library \textit{Data.UUID}, which can't be installed with \textit{haste-cabal}, thusly forcing a very sharp separation between Server and Client code.
+The problem mentioned in \cref{sub:updating-client} was encountered early in development. As mentioned there are some advantages to the second method, such as taking less system resources, and it was therefore adopted. Several channels were created, one for each type of communication. The clients could then listen for messages being written to the channel to update their state. 
 
-Password management for the games are hashed by the library \textit{Crypto.PasswordStore}. The library does, however, not work when compiled with Haste. Because of this all passwords are sent in clear text to the server where they are hashed and stored. This approach would work if Haste.App provided secure web sockets. As it is, however, a malicious person can intercept the communication and see the passwords. 
+Moreover, to allow communication between connected players a chat was implemented using concurrent channels the same way as mentioned above. For each client joining a chat the corresponding channel on the server is duplicated and saved in a client entry for that specific client. An illustration of the flow of reading a chat channel can be seen in \cref{fig:read-chat-from-server}.
 
-\todo{How much are we supposed to write about the development of the lobby?}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5,width=0.7\textwidth]{figure/readChatFromServer}
+    \caption{Visualisation of data flow when a client uses RPC to remotely access the API function readChatChannel.}
+    \label{fig:read-chat-from-server}
+\end{figure}
+
+In addition, to properly evaluate the development of a web application using Haste.App it was decided that the lobby should save most of its data in a database. Because databases are a common addition to web applications. MySQL was chosen as the backend database server and to interface with it from Haskell the libraries \textit{Persistent} \cite{persistent-yesod} and \textit{Esqueleto} \cite{esqueleto-hackage} were used. \textit{Persistent} contains most of the database functionality used in this project, including declaring type-safe SQL tables in Haskell code and Haskell functions that support basic database queries. \textit{Esqueleto} extends the functionality of \textit{Persistent} to allow  custom, type-safe SQL queries that are more complex. At the beginning of the development, all games were stored in a list on the server, but this data was migrated to be stored only in the database to test its properties.
+
+Furthermore, it was decided to test how password management would work with Haste.App, since authentication of users is another important aspect in web development. Therefore, some Haskell libraries offering hashing of passwords were considered and it was decided to use \textit{Crypto.PasswordStore} \cite{pwstore-package}. However, since it would take too long to develop a user authentication system, it was decided that users should be able to protect their games with passwords. At first the passwords were meant to be hashed at the client, but the library was not possible to install with Haste. As such the passwords are sent in plain text and hashed at the server.
 
 
 
-%UML modell över hur hastings är uppbyggt?
-%Limitations vi stötte på. cpp definitioner för att ha dummy definititions av funktioner som inte ska användas
-%Val av datatyper för att strukturera upp spelare, spel, koppla till sessionIDs m.m. Saker som syns
+\subsubsection{Data types of the Lobby}
+To create the lobby as previously described, a number of data types were created. The data types are mostly self-descriptive, but some of the design decisions are illustrated here. The data types used in the lobby can be seen in \cref{fig:datatypes}.
 
-\subsubsection{Haste and Haste.App}
-\todo{Should this subsection be in Development?}
-In this section both advantages and disadvantages of developing an application using Haste and Haste.App will be outlined.
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{figure/datatypes}
+        \subcaption{The diagram displays the hierarchy in which the data types depend on each other.}
+    
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+        \begin{lstlisting}
+type LobbyState = (Server ConcurrentClientList, Server ConcurrentChatList)
+type ConcurrentClientList = MVar [ClientEntry]
+type ConcurrentChatList = MVar [Chat]
 
-Generating HTML is hard. There aren't that many functions provided by Haste in the first place and those that do exist operate on a low level. The functions operate in a linear way on different HTML elements such as $<div>$ or $<body>$ by first getting an element by its id and then either modifying that element or appending other elements as children, making the code very verbose. This is in contrast to HTML where the contents are laid out in a hierarchical tree. The difference between Haste and HTML primarily creates problems with the maintainability of the code.
+type Chat = (Name, Chan ChatMessage)
 
-Because Haste is still a very new product (the version at the time of writing this paper is 0.5.4) the development of Haste is both very active and an update to Haste could introduce breaking changes to the API. In addition while there exists many mature Haskell libraries which are available to use the libraries that exist for Haste are both very few and more often than not require a specific version of the Haste compiler to work. \todo{Highlight specific problems that this causes?}
+type Name = String
 
-One thing that could be considered positive with this seamless programming model is that both the client and server logic is written in the same language. This then no longer requires the programmer to know two different languages. Putting all the logic in one file also appears more natural since the client and server programs are often seen as one, not as two different applications.
+data ClientEntry = ClientEntry {sessionID    :: SessionID
+                               ,name         :: Name
+                               ,chats        :: [Chat]
+                               ,lobbyChannel :: Chan LobbyMessage
+                               ,gameChannel  :: Chan GameAction}
 
-%
-%Things to write about haste and haste app specific things regarding development
-%1. HTML generation is hard with haste
-    %2. This makes larger projects dependent on third party libraries or more development time
-%3. In general not suitable for large project where everything is written in haste, why?
-%   a) Redirection between pages disconnects client from server
-%   b) No integrated way to handle multiple pages in a good way
-%   c)
-%4. No network protocol errors due to static type checking, quantify the importance of this
-%5. Client-centric approach is counter-intuitive if you are used to a more traditional client server approach
-%6. Despite this good things about the client-centric approach. pls
-%7. Rapid development of haste introduces breaking changes, especially for third party libraries, this makes it hard to %develop for haste?
+data ChatMessage = ChatMessage       {from    :: Name
+                                     ,content :: String}
+                 | ChatJoin
+                 | ChatAnnounceJoin  {from :: Name}
+                 | ChatLeave
+                 | ChatAnnounceLeave {from :: Name}
+                 | ChatError         {errorMessage :: String}
+
+
+data LobbyMessage = NickChange | GameNameChange | KickedFromGame | GameAdded 
+                  | ClientJoined| ClientLeft | PlayerJoinedGame | PlayerLeftGame 
+                  | StartGame | LobbyError {lobbyErrorMessage :: String}
+
+
+        \end{lstlisting}
+        \subcaption{The data types as they are defined in Haskell. GameAction is defined in the Game section.}
+    \end{subfigure}
+    \caption{Illustration of the data types in the lobby.}
+    \label{fig:datatypes}
+\end{figure}
+
+First, two lists were encapsulated in an MVar, namely $ConcurrentClientList$ and $ConcurrentChatList$. They were decided to be MVars since they are passed to the remote server functions at the entry point of the program and then modified inside those functions. This was necessary since it allows them to work in a similar way to a state, and since it allows only one process to access them simultaneously. Originally there was one more MVar list, $ConcurrentGameList$, but it was removed as all game data was instead saved in the database.
+
+Next, there are two $Message$ data types, $ChatMessage$ and $LobbyMessage$. These were created in order to communicate change to clients. They are encapsulated in Concurrent Channels in order to allow the server, via a call from a client, write several messages to a client. These messages are then read via a remote call from a client to the server as illustrated in \cref{fig:reading-channel}.
+
+\subsection{Issues encountered with Haste and Haste.App}
+\label{sub:issues-during-development}
+During the development of the lobby and game a number of issues with Haste and Haste.App arose. The issues were related to working with channels, using the FFI, rendering, dependency management, password management and security, and generating HTML. %Here thgeneratingese issues are described in the context they appeared during the development of the lobby. \todo{Ta bort sista meningen?}
+
+Channels from the $Control.Concurrent$ package does not seem to work with Haste. Writing to a channel works fine, but any other operation such as reading from the channel did not work. The application simply crashes when using any of those functions. 
+
+Using the library function for getting mouse coordinates in a canvas returns the x coordinate relative to the whole screen, and y coordinate relative to the canvas, which of course is not correct. This seems to be a problem with JavaScript and not Haste, since the library function in Haste is implemented using the foreign function interface (FFI), thus calling JavaScript code.
+
+Moreover, the highlighted bitmaps in the game are not always rendered on the canvas, and it seems to be arbitrary when the rendering starts. It is assumed that the issue related to rendering the highlighted bitmaps is caused by a bug in the Haste compiler.
+
+
+%During the development of the lobby a problem with dependencies with GHC and Haste was encountered. This problem with dependencies is discussed in \cref{sub:dependencies}. In order to give the games a unique identifier it was decided to use the library \textit{Data.UUID}, which can not be installed with \textit{haste-cabal}, thus forcing a very sharp separation between Server and Client code.
+
+Problems with dependencies with GHC and Haste exists and are discussed in more detail in \cref{sub:dependencies}. Such a problem was encountered when using the \textit{Data.UUID} library for giving games a unique identifier. The library cannot be installed with Haste, thus forcing a very sharp separation between Server and Client code. 
+
+Furthermore, as described in \cref{sub:lobby-development} passwords are sent in clear text to the server to be hashed. Sending the passwords in clear text revealed an important issue with Haste.App: Haste.App does not provide secure web sockets. Even when forcing an HTTPS connection via the web server the web sockets used by Haste always default to insecure. 
+
+%\todo{Move to discussion, but which discussion?}As such, a malicious person can intercept the communication and see the passwords.
+
+Generating HTML using Haste was a tedious task. The functions that operate on HTML work on HTML elements, for example $<div>$ or $<body>$, by first getting an element by its \textit{id} and then modifying that element. It works in the same way as generating an entire HTML page from JavaScript would. The difference between writing a simple HTML tree in Haste compared to pure HTML can be seen in \cref{fig:HTML-generation}. There are a couple of libraries developed for Haste that attempt to simplify generating HTML. Most of these libraries are, however, not up to date and will not work with the current version of Haste due to the rapid development of Haste itself. 
+
+\begin{figure}[h!]
+    \centering
+\begin{subfigure}[b]{\textwidth}
+\begin{lstlisting}
+parentDiv <- newElem "div" `with`
+    [
+        attr "id"    =: "parent-div",
+        attr "class" =: "input-group"
+    ]
+
+inputField <- newElem "input" `with`
+    [
+      attr "type"  =: "text",
+      attr "id"    =: "text-field",
+      attr "class" =: "form-control"
+    ]
+
+buttonSpan <- newElem "span" `with`
+    [
+      attr "class" =: "input-group-btn"
+    ]
+button <- newElem "button" `with`
+    [
+      attr "id"    =: "input-button",
+      attr "type"  =: "button",
+      attr "class" =: "btn"
+    ]
+buttonText <- newTextElem "Change"
+
+appendChild button buttonText
+appendChild buttonSpan button
+appendChild parentDiv inputField
+appendChild parentDiv buttonSpan
+appendChild documentBody parentDiv
+
+\end{lstlisting}
+\caption{Creating HTML in Haste}
+\end{subfigure}
+
+
+\begin{subfigure}[b]{\textwidth}
+\begin{lstlisting}[language=HTML]
+<body>
+    <div id="parent-div" class="input-group">
+        <input type="text" id="text-field" class="form-control">
+        <span class="input-group-btn">
+            <button id="input-button" type="button" class="btn">
+                "Change"
+            <button>
+        </span>
+    </div>
+</body>
+
+\end{lstlisting}
+\caption{The same HTML in an .html file}
+\end{subfigure}
+
+\caption{Comparison of generating HTML in pure .html files and in Haste}
+\label{fig:HTML-generation}
+\end{figure}
+
+
+However, an alternative to writing the HTML in Haste would be to have several HTML files that could be switched to during the use of the lobby. This also exposed an issue with Haste.App, however. When the HTML file was switched the client disconnects from the server and then reconnects. Since the client has to reconnect, the server cannot easily identify this client as being the same as before. While this is an issue that can be bypassed by adding some identification to the client stored in HTML5 Local Storage (that Haste has support for) it was considered out of scope of the project.
 
 
 
 \section{Results}
-% How we arrived at these results,
-% strict objective results.
+The aim of this project was to evaluate, based on a few topics, how suitable Haste.App is for web development. The topics were: Stability, programmer productivity and performance. The result is split into two parts. The first part addresses what was created, namely the game and the lobby and their respective functionality. The second part presents the results of the three points of interest and is evaluated as described in \cref{sec:method}.
 
-The aim of this thesis was to evaluate, based on a few topics, how suitable Haskell using Haste.App is for web development.
-The topics were: stability, programmer productivity and performance.
-
-The result is split into two parts. The first part addresses what was actually created, namely the game and the lobby and their respective functionality. The second part presents the results of the three points of interest, and will be evaluated as described in \cref{sec:method}.
-
-\subsection{How the game and lobby became}
+\subsection{Game and Lobby implementation results}
 \label{sub:game-lobby-results}
-The game of chinese checkers was created with rules described in \cref{sec:chinesecheckers}.
+The game of Chinese Chequers was implemented according to the game flow described in \cref{sec:game-rules}. The resulting graphics can be seen in \cref{fig:gameGraphics}.
 
-The lobby system became a system that does a number of things: One, it is possible to start a game and have others join. Two, it is possible to chat with fellow players. Three, the owner of the game can change settings of the game, increasing the maximum number of players and changing the name. Four, it establishes a connection to a database where all connected clients and games are stored. \comment{Add more things it can do}.
+%The implementation of Chinese Chequers was created with an overview perspective; the pieces are represented as coloured circles and the holes are represented by squares. The following rules apply to the implementation of Chinese Chequers: The objective for a player is to move all pieces to the opposite side. At each turn, one can move a piece one step or jump over another piece. If a player jumps over a piece, they can choose to gain an additional move. The first player to get all his pieces over to the opposite side wins.\todo{This is just a rehash of the rules described in the method}
 
-The source code can be found at \url{https://github.com/DATx02-16-14/ChineseCheckers} and \url{https://github.com/DATx02-16-14/Hastings} respectively. The application can, for a limited time, be found at http://www.hastings.se/. 
 
-\subsubsection{Security}
-A problem with using Haste.App is the fact that it does not currently support secure communication using HTTPS. It is possible to manually force a HTTPS connection via web server settings but since the Web Socket connection between the client and server is handled by Haste.App that connection remains unencrypted. For the user this results in a completely blank page since most web browsers does not allow a website to partially load resources from an unencrypted source. In practice this means that is that any sensitive data sent between the client and the server such as passwords can easily be picked up by an attacker.
+The implementation of the lobby system resulted in a system that does the following things:
+\begin{itemize}[noitemsep]
+    \item Start a game that others can join.
+    \item Changing settings of a game, including name, password and, max number of players allowed.
+    \item Chat with other players.
+    \item Saving games and players in an external database.\\
+\end{itemize}
 
-A partial solution to this problem would be to encrypt the passwords manually on the client and decrypt them on the server, there are however several problems with this. Firstly the library used in this project did not work client-side, there might exist another library that does work but none were found that were suitable. Secondly and most important, implementing security and encryption correctly is very hard. Because there already exists a widely used and tested way of encrypting data sent over the web, namely HTTPS, that way should always be preferred. 
+%All passwords are sent in clear text to the server over regular HTML5 WebSockets. The reason secure web sockets are not used is that Haste.App does not provide secure web sockets.\todo{Should this be here? Seems out of context}
+
+For a more in-depth review of the resulting implementation the source code is available on GitHub:
+\begin{itemize}[noitemsep]
+    \item Game: \url{https://github.com/DATx02-16-14/ChineseCheckers}
+    \item Lobby: \url{https://github.com/DATx02-16-14/Hastings}
+    \item Performance test scripts: \url{https://github.com/DATx02-16-14/scripts}
+\end{itemize}
+
+%In addition, a demonstration of the complete application can be found at \url{http://www.hastings.se} for a limited time.
+
 
 \subsection{Results regarding performance}
-\todo{Time complexity analysis of important code parts, to justify that performance does not suffer from poorly written code}
+\label{sub:performance-results}
+The performance of the application is measured by, as stated in \cref{sub:method-performance}, the bandwidth required and system resources used. The bandwidth considered is primarily the bandwidth required to send the JavaScript since the bandwidth required to send images, text, and other static content is not unique to Haste.App. Moreover, the bandwidth needed when communicating with the server is also considered to make sure the client-centric programming model does not yield an unnecessary amount of network traffic. Furthermore, the system resources used on the server is measured, with respect to how many players are online. Moreover, the system resources used on the client is measured.
 
-Performance of the application is measured by, as stated in \cref{sub:method-performance}, bandwidth required and system resources used. The bandwidth taken into account is primarily the bandwidth required to send the JavaScript since the bandwidth required to send images, text, and other static content is not specific to Haste.App. Moreover, the bandwidth required when communicating with the server is also considered to make sure the client centric programming model does not yield an unnecessary amount of network traffic. Furthermore, the system resources used on the server is measured, in respect to how many active players are online and how many active games are being played. Above that, the system resources used on the client is measured.
+%Regarding bandwidth, the size of the JavaScript that is sent to the client when establishing connection is 236 kilobytes. \comment{Compared to other such sites?}
 
-The bandwidth required when loading the site seems not to be a problem. The length of the initial packet sent when establishing connection to the server, which contains the JavaScript, is 339 bytes. \comment{Compared to other such sites?}
+\subsubsection{Server-side performance}
+\label{subsub:server-performance-results}
+Using \textit{watir} it was possible to simulate about 80 clients that joined the lobby, wrote messages in the chat and created games. The 80 clients are split up on four computers with 20 simulated clients each. The CPU usage, memory usage, load average and network traffic can be seen in \cref{fig:cpu-results} and \cref{fig:cpu-results-attachment}, \cref{fig:memory-results} and \cref{fig:memory-results-attachment}, \cref{fig:network-results} and \cref{fig:network-results-attachment}, \cref{fig:load-average-results} and \cref{fig:load-average-results-attachment}, respectively. The server running the application has 8 GB RAM and an Intel(R) Core(TM)2 Duo CPU E8400 3.00GHz, running Ubuntu 15.10. The full system specifications can be found in \cref{sub:system-specs}. Two tests were performed and are described below along with observations on CPU, memory, network traffic, and load average.
 
-\todo{Write about system resources}
+The first test was about testing the load when creating games at the server and as such tested performance when accessing the database. At 14:30 where the 80 clients joined the game. At 14:45 the 80 clients created games and upon creating the games they change the games name, password and max amount of players. At 15:05 all clients starts to leave the server.
 
+The second test tested pure Haste.App performance by chatting in the server, it does not require any access to the database. The 80 clients joined at 16:25, and at 16:40 they start to chat. At 16:50 the clients then disconnect from the server.
+
+Firstly, regarding CPU on the server, which is illustrated in \cref{fig:cpu-results} and \cref{fig:cpu-results-attachment}, it increases to about 5\% when 80 clients joins the server. It can be seen that the most CPU intensive tasks occur when games are created and settings on them changed. This is either because of passwords for the games are set and then hashed on the server or because all game data is entered into the database and as such when a setting is changed and a game created the database is accessed. When chatting, that is only sending messages through Haste.App the CPU usage stays at roughly 5\%.
+\begin{figure}[H]
+    \includegraphics[width=0.9\textwidth]{figure/serversidePerformance/2016-05-05-game-test-cpu2.png}
+    \caption{CPU usage on the server during the game test}
+    %\caption{CPU usage on the server during the two tests}
+    \label{fig:cpu-results}
+\end{figure}
+
+The memory usage on the server, which is illustrated in \cref{fig:memory-results} and \cref{fig:memory-results-attachment}, stays about the same during both tests. The only thing that seems to require any significant amount of memory is when the initial connection is established. 
+
+\begin{figure}[H]
+    \includegraphics[width=0.9\textwidth]{figure/serversidePerformance/2016-05-05-game-memory.png}
+    \caption{Memory usage on the server during the game test}
+    %\caption{Memory usage on the server during the two tests}
+    %\caption{Server performance when 80 clients joined the server(14:25), created games and changed their settings(14:45-15:00) and then left(15:10)}
+    \label{fig:memory-results}
+\end{figure}
+
+Furthermore, network traffic on the server during the two tests are shown in \cref{fig:network-results} and \cref{fig:network-results-attachment}. The server sends more data than it receives when the clients connects. During the phase where the clients either chat or create games the server sends about the same amount of data as it receives as all clients receives messages as described in \cref{sub:lobby-development}. When disconnecting some data is sent, but not much.
+
+\begin{figure}[H]
+    \includegraphics[width=0.9\textwidth]{figure/serversidePerformance/2016-05-05-network-traffic-game.png}
+    \caption{Network traffic on the server during the game test}
+    
+    %\caption{Network traffic on the server during the two tests}
+    %\caption{Server performance when 80 clients joined the server(14:25), created games and changed their settings(14:45-15:00) and then left(15:10)}
+    \label{fig:network-results}
+\end{figure}
+
+The load average can be seen in \cref{fig:load-average-results} and \cref{fig:load-average-results-attachment}. The load stays below one throughout the tests which indicates that there is no process that has to wait to be run. The max load average is 0.43, which is not especially high.
+
+\begin{figure}[H]
+    \includegraphics[width=0.9\textwidth]{figure/serversidePerformance/2016-05-05-load-average-game-test.png}
+    \caption{Load average on the server during the game test}
+    %\caption{Server performance when 80 clients joined the server(14:25), created games and changed their settings(14:45-15:00) and then left(15:10)}
+    \label{fig:load-average-results}
+\end{figure}
+
+
+\subsubsection{Client-side performance}
+\label{subsub:client-performance-results}
+The measured performance on the client-side was done in two parts. The JavaScript was profiled three times, with 0, 30 and 90 games created in the lobby respectively, results from that profiling are shown in \cref{fig:hastings-performance}. The figure shows that the relationship between the number of games created in the lobby and the total loading time for the website has a linear relationship. Additionally, in \cref{fig:hastings-comparison} two other websites that offer a lobby system were profiled, \textit{brasee.com} and \textit{lichess.org}. Lichess is a very popular web site with 6000 concurrent users and 1500 simultaneous games at the time of profiling, Brasee, on the other hand, is not as popular with only a couple of games and about as many users online when the profiling was run. Nonetheless, it is interesting to note that while Lichess were noticeably slower, it also had a lot more games and players connected.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figure/clientsidePerformance/graph1.png}
+        \subcaption{1 player connected and 0 games created.}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figure/clientsidePerformance/graph30games1.png}
+        \subcaption{1 player connected and 30 games created.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/clientsidePerformance/graph90games1.png}
+        \subcaption{1 player connected and 90 games created.}
+    \end{subfigure}
+    
+    \caption{Breakdown of computation time when loading the website in Chrome.}
+    \label{fig:hastings-performance}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figure/clientsidePerformance/graph1.png}
+        \subcaption{Loading our website with 0 games created.}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figure/clientsidePerformance/braseegraph1.png}
+        \subcaption{Loading of the lobby on \url{http://www.brasee.com/games/lobby.html}.}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figure/clientsidePerformance/ligraph1.png}
+        \subcaption{Loading of the lobby on \url{http://en.lichess.org/}.}
+    \end{subfigure}
+    
+    \caption{Breakdown of computation time when loading three similar websites in Chrome.}
+    \label{fig:hastings-comparison}
+\end{figure}
+
+\subsubsection{Bandwidth when using Haste.App}
+In order to profile the bandwidth used by the websites, the program Wireshark was used. All packets sent and received by the host address were captured and analysed, in \cref{tab:site-comparisons}, data is differentiated by static and dynamic data. Static data is images and website content that are sent on page load. Dynamic data is data transmitted in response to an event by the application, for example, a player joining the lobby or when a chat message is sent. 
+
+In \cref{tab:site-comparisons} there are a couple of noteworthy differences. Firstly, Brasee has considerably more static data which can be attributed to the large number of images on that website compared to the others. Secondly, the Lichess lobby sent more dynamic data; because the Lichess lobby had a greater number of players connected.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l}
+\hline
+\textbf{Web Site} & \textbf{Total Data Sent} & \textbf{Dynamic data}     & \textbf{Static Data}       &  \\ \hline
+Lichess Lobby  & 1185,737         & 1181,276    & 4,461           &  \\ \hline
+Lichess Game   & 122,067          & 116,512     & 5,555           &  \\ \hline
+Brasee Lobby   & 1496,903         & 254,435     & 1242,468        &  \\ \hline
+Brasee Game    & 2108,192         & 692,241     & 1415,951        &  \\ \hline
+Our Lobby      & 281,692          & 278,035     & 3,657           &  \\ \hline
+Our Game       & 162,067          & 156,705     & 5,362           &  \\ \hline
+\end{tabular}
+\caption{Data sent (in kilobytes) between the client and server for different lobby and game system during 10 minutes.}
+\label{tab:site-comparisons}
+\end{table}
 
 \subsection{Results regarding stability}
-The stability of the application was considered out of four aspects: updating server, client with outdated JavaScript, runtime errors on the Server, and runtime errors on the client.
+\label{sub:stability-results}
+The stability of the application was considered out of four aspects: updating the server, a client connecting with outdated JavaScript, runtime errors on the Server, and runtime errors on the client.
 
-Because of the static type checking the amount of runtime on the client errors were drastically reduced compared to when writing regular JavaScript. It did, however, not completely rid the application from them. Worth noting are errors that are recoverable which seem to be inherent to Haste, namely when there is an input field. When first typing in the input field it throws an error with the message \textit{Uncaught [object Object]} and when continuing to write it throws and error with the message \textit{Uncaught Infinite loop!} for every letter. The errors does however not seem to have any effect on the application. The unrecoverable errors that can occur do so when working with the DOM, and specifically when trying to retrieve objects with ID's that does not exist. This is however a problem a programmer has to deal with regardless of using Haste or JavaScript directly. Other than those errors, which can be completely avoided by rewriting some code, there are very few errors than can occur. The errors that do occur seem to be inherent to JavaScript being loosely typed. 
+Because of the static type checking the amount of runtime on the client errors were drastically reduced compared to writing JavaScript code directly. It did, however, not completely rid the application from them. Worth noting are errors that are recoverable which seem to be inherent to Haste, namely when there is an input field. When first typing in the input field it throws an error with the message:
+\begin{align*}
+    \textit{Uncaught [object Object]}
+\end{align*} 
+When continuing to write it throws an error with the message for every letter typed:
+\begin{align*}
+    \textit{Uncaught Infinite loop!}
+\end{align*}
+These errors, however, do not seem to have any effect on the application. The unrecoverable errors that can occur do so when working with the DOM, and specifically when trying to retrieve objects with ID's that does not exist. This is, however, a problem that has to be dealt with both when using Haste and when using JavaScript.
 
-Moreover, the server also very rarely has runtime errors. This, however, is not as exceptional as back end servers are most often not written in a language that is quite as error prone as JavaScript. What is more exceptional is that the programming model, with tightly written communication, appears to work very well. There has been no instance of a crash or bug occurring because of a network communication problem. 
+Moreover, the server also very rarely has runtime errors. This, however, is not as exceptional as back end servers are rarely written in a language that is quite as error prone as JavaScript. What is more exceptional is that the programming model, with tightly written communication, appears to work very well. There has been no instance of a crash or bug occurring because of a network communication problem.
 
-Updating the server, however, seems to be a very prominent issue with Haste.App. There is currently no way of updating the server without disconnecting all clients connected. As the communication is handled via web-sockets, these close when the server is restarted and as such there is no way of resuming the same connection. The client has to restart the connection and thus it has to restart from the same state it was in when it first connected to the server. There doesn't seem to be any way of keeping current connections alive while updating the server so that new connections receives an updated state. So if there is any interest in continuing a session when updating the server an additional module has to be written that saves the state of the player when updating the server. It is, however, possible to make use of a database to store values about a connected session and Haste has support for HTML5 Web Storage. These tools together can be used to allow a client to reconnect to the same session as when the server went down.
+Updating the server, however, seems to be a prominent issue with Haste.App. There is currently no way of updating the server without disconnecting all clients connected. As the communication is handled via HTML5 WebSockets, these close when the server is restarted and as such there is no way of resuming the same connection. The client has to reset the connection and thus it has to restart from the same state it was in when it first connected to the server. There is no way to keep current connections alive while updating the server so that new connections receives the updated state. It is, however, possible to make use of a database to store values about a connected session and Haste has support for HTML5 Web Storage. These tools together can be used to allow a client to reconnect to the same session as when the server went down.
 
-\todo{Rewrite this entirely, was written with standalone in mind}
-Furthermore, the JavaScript will never be outdated. Since there is no way of updating the server without closing the connection for all clients, all clients have to reload the page when the server updates it's state. When this happens the new JavaScript is loaded and as such there will not be a problem working with outdated JavaScript.
+Since the code is compiled twice, the server and the client code needs to match. Matching the code can be tedious since the HTML has to be placed/updated at the web servers root and then the server has to be restarted. Should one of the two steps not be performed, the application can enter a faulty state and crash.
 
-\todo{Not sure if this belongs here}
-Moreover, overall correctness and stability of the application can be asserted using the QuickCheck library which has support for testing both pure and monadic functions. This enables testing various states and function calls with arbitrary values. While this is a huge benefit of using Haskell, it is not specific to Haste or Haste.App, other than that a lot of the functions are monadic which forces the use of the monadic part of QuickCheck. The static type checking of Haskell eliminates all semantic errors, and QuickCheck allows the code to be tested for logical errors. 
-
+Moreover, to ensure the logical correctness of the code, the testing library QuickCheck was used. The ability to use a powerful testing library helps to eliminate logical errors that cannot be detected by static type checking. QuickCheck has helped to ensure the stability of the application developed.
 
 
 \subsection{Results regarding programmer productivity}
-Programmer productivity when writing a web application using Haste.App was heavily influenced by a number of factors. A large influence, compared to writing pure JavaScript, is the fact that Haste is based on Haskell. This, of course, has the typical advantages and disadvantages of writing programs in a declarative paradigm. While it isn't this papers purpose to discuss declarative versus imperative programming and the productivity effects of that, a couple of outstanding productivity differences between Haskell and JavaScript will be accounted for. Other influences on programmer productivity have been debugging and errors, database usage, the linear, client centric approach taken by Haste.App, and the fact that the whole application is written in the same language in the same project. \comment{Add more as more subsubsections are added}
-
+\label{sub:programmer-productivity-results}
+Programmer productivity when writing a web application using Haste.App was heavily influenced by a number of factors. A large influence, compared to writing pure JavaScript, is the fact that Haste is a Haskell library. Other influences on programmer productivity have been debugging and errors, database usage, the linear, client-centric approach taken by Haste.App, and the fact that the whole application is written in the same language in the same project. The lines of code in the complete application are also compared to other similar applications and games.
 
 \subsubsection{Haskell versus JavaScript during development}
-As previously mentioned, the purpose of this paper is not to discuss the declarative vs imperative paradigm. There are however some notable differences in writing Haskell versus writing JavaScript, which heavily influence programmer productivity. These factors include the type system, the fact that it produces less code, the learning curve of Haskell, \comment{Add more things that influence Haskell vs JS}
+An advantage of writing the client-side code using Haskell instead of JavaScript has been the static type system of Haskell. Allowing types to be checked during compilation has reduced the number of bugs encountered to a very limited set of runtime errors, which has been helpful. Instead of having to check the types of a function or data type (or object in JavaScript), one can rely on the static type checking to report any type errors. In addition, since the type checking can also be used over the network, type checking network code is an easy matter.
 
-One clear advantage of writing the client side code using Haskell instead of JavaScript has been the static type system of Haskell. Allowing types to be checked in compile time has reduced the number of bugs encountered to a very limited set of runtime errors, and considering the points discussed in \cref{subsub:runtime-errors-debugging} this has been a very good thing. Instead of having to check the types of a function or data type (or object as it would have been in JavaScript), one can simply rely on the static type checking to report any type errors and then correct them. Above that, since the type checking can also be used "over the network", type checking network code is also an easy matter, as the compiler does that. 
+Another advantage of Haskell is the clear separation between pure code and side effecting code. Most side effecting code in this project were Haste code. The graphical and network implementations are the parts where Haste was needed, while the game logic was written purely in Haskell. This clean separation made it easy to use \textit{QuickCheck} to test the pure and impure code as shown in \cref{fig:quickchecking}, and \cref{fig:quickcheck-monadic}.
 
-Another advantage is the fact that the amount of code lines are fewer than in a language such as JavaScript. This means both that the functions are quicker to write, and that the lines of code to maintain are fewer. Compared to JavaScript, even if the purpose of a function and how to write it is clear, it most probably contains a lot of lines of code. In Haskell it is often the case that when one grasps how to write a function, it is simply a matter of a couple of lines of code. 
-% Less code - easier to maintain
-% Mer logiskt - återanvända saker mycket lättare
+\begin{figure}[h!]
+    \begin{lstlisting}
+-- |Property that checks that a square is not empty after having piece put into it.
+prop_putPiece :: TableCoords -> OnlyPiece -> Bool
+prop_putPiece (TableCoords (t, _, coord)) (OnlyPiece p) = squareContent (putPiece t p coord) coord /= Empty
+    \end{lstlisting}
+    \caption{Testing pure code using QuickCheck.}
+    \label{fig:quickchecking}
+\end{figure}    
 
-However, one disadvantage is the steep learning curve of Haskell. JavaScript has the advantage of being a very easy language to learn\todo{Should this be cited?}, while Haskell is generally considered harder. While this technically means that Haskell is a more advanced language, it also means that a lot of developers have a hard time getting into it. This is a clear disadvantage for Haste.App since it means that there are fewer developers willing to go through the trouble of learning Haskell in order to use Haste.App. Moreover, since Haskell is such a small part of web development, there is not a huge base of developers to draw into the world of Haste.App. 
+\begin{figure}[h!]
+    \begin{lstlisting}
+-- |Property that makes sure a game can be properly created.
+prop_createGame :: [ClientEntry] -> Int -> Property
+prop_createGame clientList maxPlayers = monadicIO $ do
+  pre $
+    not (null clientList) &&
+    maxPlayers /= 0
+
+  let sid = sessionID $ head clientList
+  let playerName = name $ head clientList
+  run preProp
+
+  --Setup test preconditions.
+  clientMVar <- run $ newMVar clientList
+
+  run $ PlayerDB.saveOnlinePlayer playerName sid
+  uuid <- run $ Server.Game.createGame clientMVar sid maxPlayers
+
+  game <- run $ GameDB.retrieveGameBySid sid
+
+  --Cleanup test
+  run postProp
+
+  assert $
+    --Check that the UUID returned exists.
+    isJust uuid &&
+    --Check that the game exists in the database.
+    isJust game &&
+    --Check that the max amount of players is correct.
+    (Fields.gameMaxAmountOfPlayers . Esql.entityVal . fromJust) game == maxPlayers
+    \end{lstlisting}
+    \caption{Testing impure code in the IO monad using QuickCheck.}
+    \label{fig:quickcheck-monadic}
+\end{figure}
+
+However, when writing a client-server application in Haste.App almost all client and server specific code has side effects. The client code is naturally placed in the \textit{Client} monad, and the server code in the \textit{Server} monad. The client mostly creates and updates HTML, which is naturally side effecting. Furthermore, the server code mostly modifies a state, either in a database or an synchronous variable, both of which are also side effecting. However, the code is most easily testable by lifting the functions into the IO monad, which \textit{QuickCheck} supports natively.
 
 
-
-\subsubsection{Runtime errors and debugging} \todo{Not sure where this belongs}
+\subsubsection{Runtime errors and debugging}
 \label{subsub:runtime-errors-debugging}
-One disadvantage with using Haste.App is that when runtime errors occur in the JavaScript code it is almost impossible to debug properly. This is because Haste creates JavaScript that is not suitable for humans to read, variable and function names are automatically generated and all white space is removed. In addition any error messages generated are always generic and doesn't provide any useful information, an example of such error messages are "Uncaught [Object object]" or "Uncaught infinite loop". The only way to narrow down the scope of where the problem might occur is if an exception or error message is generated in response to a specific action taken by the user, in this case it might be possible to narrow down the problem to a specific Haskell function. But even then often the only way to tackle the problem is either to have a bit of luck and spot the problem by just looking at the code or, which is usually the case, remove parts of the code until the error is not generated anymore and from then narrow the error down to the correct row.
+One disadvantage with using Haste.App is that when runtime errors occur in the JavaScript code, the errors are hard to debug properly. This is because the JavaScript generated by Haste is hard to read by humans, even if the debug flag is supplied to skip some of the optimisation and minimisation steps. Also, as mentioned in \cref{sub:stability-results}, the error messages that are generated by the JavaScript does not indicate what caused the error. 
 
-When using other programming languages and indeed when programming Haskell without the use of Haste, a debugger is usually provided which enables the programmer to pause execution of the program at a specific code snippet and look at the state of the program as it is executed line by line. When debugging Haste code the usual method is instead to litter the code with print statements that after every computation prints out some or all of the interesting values for that particular code. This is both more time consuming and more error prone since the newly introduced code has to be removed when the problem is eventually solved and additional code can introduce new errors. Introducing new code in order to debug a function is also time consuming, since the program must be recompiled every time a new value needs to be printed. This problem is further compounded by using Haste since the code is compiled twice for every change made, once for the server and once for generating the JavaScript.
+Furthermore, there is no way to use a debugger on the generated JavaScript. A debugger enables the programmer to pause the execution of a program at a particular point and look at the state of the program. Because this is not possible, finding where in the code a faulty computation occurs can be extremely hard.
 
-There's one final limitation with working with the generated JavaScript and that is when the errors that occur are purely logical, i.e. errors in the code that is neither caught by the compiler nor generate runtime errors but nonetheless yield the wrong result for a computation. In this case the debugging method of choice is the same as before, introducing print statements to monitor the result of different computation. The difference is however that it can be almost impossible to efficiently narrow down the area where the problem might occur and often some amount of guesswork is needed in order to get to the function causing the problem.
-
+Consequently, these things have had a negative influence on programmer productivity. Because the time spent debugging errors in the code increases when there are no proper tools the developer can utilise.
 
 \subsubsection{Database usage influence on programmer productivity}
-Working with a database in Haskell can vary a lot depending on which package is chosen to handle the functionality, since there is no easy way to save data in a database using native Haskell code. In this project the a MySQL server was chosen to handle the persistent storage for the server and the packages Persistent\cite{persistent-yesod} and Esqueleto\cite{esqueleto-hackage} was chosen to interface with the MySQL server from Haskell code. Persistent contains most of the functionality used, including declaring type-safe SQL tables in Haskell code as well as Haskell functions that supports basic queries on the database, for example, inserting, deleting or updating data. Esqueleto extends the functionality of Persistent to allow the user to generate custom, type-safe SQL queries that are more complex than the functions provided by Persistent.
+\label{subsub:database-results}
+Several things benefit programmer productivity when working with a database library that extends Haskell's type system to the SQL domain. The most notable benefits include declaring native Haskell types as database tables and the fact that virtually all SQL errors are detected at compile time. However, one disadvantage is that the learning time of such libraries is significantly longer than other more simple libraries.
 
-There are several benefits to working with database libraries that extends Haskel's type system to the SQL domain. By far the most important benefit is the ability to declare SQL tables using TemplateHaskell\todo{Write about template Haskell in technical background?}, Persistent then expands that Haskell code into a valid Haskell type with all the necessary code to also be exported as an SQL table. Because of this the values returned by the functions that interface on the database can be saved directly into a variable with the correct type. There is no need to explicitly declare the different types of fields and the variable is ready to use as is. The same benefit is clearly seen when using Esqueleto to create custom SQL queries, both the general types for different tables as well as when comparing individual values to filter the selection from a database. This has led to a very striking result, when developing this application not a single runtime error has occurred from the result of a bad SQL query, as soon as the query compiles it is correct and will not return an error when executed.
+The advantages manifest primarily in two distinct cases. Firstly, when writing functions that interface with the database there is no need to convert between types that the database can understand and types that Haskell can understand. Secondly, when a change is made to the structure of a database table, the error is detected at compile time. When using ordinary SQL such errors are not detected. Instead, the error occurs when the application is running, if the code that causes the error is not executed very often it can take a long time before the error is detected. 
 
-Another advantage is the fact that it is not possible to make changes to the structure or types of a table and introduce an error that way. Normally when working with SQL it is possible to make changes to some part of the database that is neither accessed nor modified very often by the program. In this scenario it could take hours or days of running the program before the error occurs. It is of course possible to have a test suite run to detect errors like this but the programmer still has to manually sift through the code and find every occurrence of a query that relates to that particular table. If even one occurrence is overlooked the program will at some point throw a runtime error and the functionality related to that part of the program will not work or the program will simply crash. This problem is completely eliminated when working with type checked SQL tables and queries, as soon as a change is introduced, even if it's just a simple change of a name every SQL query related to that table will generate a compile time error.
+The disadvantage, however, is the time required to learn how to use the libraries. The time spent researching and learning these libraries was approximately 30 hours in this project. This is because the syntax that is used by these libraries is in some cases different from regular SQL, which has several problems. Mainly, the fact that the programmer already knows SQL is not very relevant while it certainly helped the learning time was still long. In addition, when another programmer has to maintain the code they have to spend a lot of time learning a new way to interact with the database. The \cref{fig:esqueleto-vs-sql} illustrates the difference between ordinary SQL syntax and the syntax that \textit{Esqueleto} offers.
 
-There are some disadvantages to working with Persistent and Esqueleto as well, the most prevalent one is the steep learning curve of especially the Esqueleto library. Persistent on the other hand is relatively easy to grasp and shouldn't require more time than any other database library in terms of understanding the basics and getting it to run in the application. Esqueleto is different in that regard since it's almost as learning a new language, in addition to SQL. The keywords are the same when using Esqueleto compared to ordinary SQL, to insert something the function insert is used, to select something the function select is used and so on. However to enable the rather advanced functionality of Esqueleto the set of operations and operators available through Esqueleto are rather large and the Haskell code required to generate a specific SQL query does not always have the same structure. This translated to about 30 hours of research in order to get sufficiently proficient in Esqueleto to be able to use it effectively. When compared to the estimated time of a couple of hours to use a library that executes SQL queries as strings the learning time is substantially larger. From this another problem is apparent, another programmer who is proficient in SQL but not Esqueleto might have trouble understanding how a particular function works.
+\begin{figure}[h!]
+\begin{subfigure}[]{\textwidth}
+\begin{lstlisting}[language=SQL]
+DELETE FROM PlayersInGame
+  WHERE game = 'gameKey' AND player = 'playerSessionId';
+\end{lstlisting}
+\subcaption{SQL statement that removes a specific player from a specific game.}
+\end{subfigure}
 
+\begin{subfigure}[]{\textwidth}
+\begin{lstlisting}[language=Haskell]
+removePlayerFromGame sessionID gameKey = runDB $
+  delete $ from $ \playersInGame ->
+    where_ (playersInGame ^. PlayerInGameGame ==. val gameKey
+        &&. playersInGame ^. PlayerInGamePlayer ==. val sessionID)
+\end{lstlisting}
+\subcaption{Esqueleto code that generates the SQL statement in (a)}
+\end{subfigure}
 
-% Working with a MySQL database in haskell, Persistent and Esqueleto.
-%Pros: Type safe, no errors in expected behaviour when the code compiles, native haskell types <--- very good
-%Cons: Confusing syntax (Template haskell and Esqueleto), in some way you have to learn another language in addition to SQL, extremely steep learning curve (about 30 hours to get it to work when knowing SQL already)
-%Kerp: fyll i här om hur det är att arbeta med databasen.
-
-
-
-\subsubsection{Client centric and linear program flow}
-% Describe how the client centric approach has influenced programmer productivity.
-The linear, client centric approach taken by Haste.App has had both positive and negative effects on programmer productivity. On the positive side, it has helped in reducing the amount of confusing errors that can occur because of the server and client operating at the same time. It has also helped in understanding the flow of the program as the server only responds to requests made by a client. On the negative side, it has forced the construction of a way to communicate sate changes to the client with the help of concurrent channels, something that might have been easier to construct if the server could act as more than a state. 
-
-
-\subsubsection{Program in one file}
-\todo{What to call this? Should deal with programmer productivity effects of writing the entire program in the same file.}
-Being able to write the entire application in the same project or file has had a significant boost to programmer productivity. Not only the fact that the programmer is relieved of dealing with the network communication, and as such allow the type checking to check remote calls. It is also helpful that the entire application is written in the same language. However, the fact that the same sources is compiled twice with different compiler has led to some annoying issues with dependencies.
-
-Firstly, the fact that the programmer never has to consider the network communication may not be a large issue if one is comfortable with network communication. However, for someone new to the field it can be a huge relief. As such it has a positive effect on programmer productivity since the communication is built into the structure of Haste.App. Above that, the simple fact that all network communication is type checked also has positive effects on programmer productivity since it removes confusing network errors from the application.
-
-Secondly, using the same programming language throughout the application also has a positive effect on programmer productivity. Both because a programmer doesn't have to be confident in two different languages in order to construct the application, but also because the same code can be reused on both the client and on the server. However, during the construction of Hastings barely any of the code written has appropriate reuse on both the client and the server. As such the effects of this are rather small. It is however still useful not to have to change language when switching between client code and server code.
-
-Thirdly, because the same sources, at least to some extent, are compiled twice and since all libraries that work with GHC does not work wth Haste. This led to the programmer having to force a separation between the code that will be compiled with GHC and Haste respectively. This was something that took some time to do, and it made for some confusing code. It requires that every initialisation method in the part of the code that has to be compiled by the two compilers needs to be defined two times. Once for the real method and once using a \#define macro from C++. Which of the two methods to define is then handled by using a \#ifndef macro again from C++, to keep track of which compiler is currently used. 
-
+\caption{The difference between Esqueleto syntax and SQL syntax.}
+\label{fig:esqueleto-vs-sql}
+\end{figure}
 
 
+\subsubsection{A client-centric, seamless, and linear program flow}
+The seamless, linear, client-centric approach of Haste.App has had a boost to programmer productivity. Not only the fact that the programmer is relieved of dealing with the network communication, and as such allow the type-checking to check remote calls. It is also helpful that the entire application is written in the same language. However, the fact that the same sources are compiled twice with different compilers has led to some issues with dependencies.
+
+Firstly, the fact that the programmer never has to consider the network communication may not be a large problem if one is comfortable with network communication. However, for someone new to the field it can be a huge relief. As such it has a positive effect on programmer productivity since the communication is built into Haste.App. Above that, the simple fact that all network communication is type checked also has positive effects on programmer productivity since it removes confusing network errors from the application.
+
+Using the same programming language throughout the application also has a positive effect on programmer productivity. Both because a programmer does not have to be confident in two different languages to construct the application, but also because the same code can be reused on both the client and on the server. However, during the construction of the application in this project barely any of the code written has appropriate reuse on both the client and the server. Therefore, the effects of this are rather small. It is however still useful not to have to change language when switching between client code and server code.
+
+Moreover, the same sources are compiled twice, but all libraries that work with GHC does not work wth Haste, which is a problem. Since all libraries do not function with both compilers, it led to the programmer having to force a separation between the code that is compiled with GHC and Haste respectively. The separation was something that took some time to do, and it made for some confusing code.
+
+The client-centric approach of Haste.App has helped reduce the amount of errors that can occur because the client and server do not execute code in parallel. Because the client is the driving force, it is easier to reason about the state of the program since the server will not execute any code without the client telling it to. Furthermore, there is no need to handle the client waiting for information from the server; the client calls a blocking function that requests data from the server.
 
 
+\subsubsection{Project Standards and module structure}
+Neither Haste nor Haste.App brought any project structure standards, this may result in the need to refactor code. Refactoring code is very unproductive. In the developed game and lobby there was a lack of structure in multiple areas. Specifically how to create and update views, extracting pure logic to enable testability and also separating client and server code.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3,width=0.5\textwidth]{figure/module-dependencies}
+    \caption{The resulting module structure in the project.}
+    \label{fig:module-dependencies}
+\end{figure}
 
 
+\subsubsection{Lines of code}
+\label{subsub:lines-of-code-results}
+The source lines of code (SLOC) in the finished game and lobby were compared to other similar applications, both games and lobby systems in the \cref{tab:sloc-comparison}. The applications that were compared to can be found at GitHub:
+\begin{enumerate}
+    \item Offline two player Chinese Chequers in C++ called Checkers, here referred to as Chinese Chequers \#1, \url{https://github.com/chandramaloo/Checkers}
+    \item Offline full Chinese Chequers in Java called Chinese\_Checkers, here referred to as Chinese Chequers \#2, \url{https://github.com/rycnhoj/Chinese_Checkers}
+    \item Offline two player Chinese Chequers with an additional puzzle mode in Java called chinese-checkers, here referred to as Chinese Chequers \#3,  \url{https://github.com/mavlee/chinese-checkers}
+    \item Web application for Chinese Chequers with backend in Java called ChineseCheckersWebApp, \url{https://github.com/liornaar/ChineseCheckersWebApp}
+\end{enumerate}
 
-
-
-
-\subsubsection{Standards}
-\todo{Write about what is common in technic2al background?}When developing for the web it is very common to use a framework such as Ruby on Rails or React\todo{cite this claim?}. Frameworks have determined certain standards regarding the structure of the code. By using frameworks the programmer can be a lot more efficient in learning the ropes of a new project. Haste.App doesn't have any accompanying framework. Thereby every project has a great potential to be unique in some way. In some cases this can be good for the application being built but at a large this counteracts initial productivity for new programmers to a project.
-
-More in general, it would be helpful to have some preset norms to follow. It would have saved some refactoring, in particular how to structure the views i.e. the generating of the DOM-elements and how they are updated. 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Name}  & \textbf{SLOC}                                      \\ \hline 
+        \multicolumn{2}{|c|}{\textit{This project's applications}}          \\
+        This project's Chinese chequers     & 633 Haskell                   \\ \hline
+        This project's lobby system         & 1754 Haskell                  \\ \hline
+        Lobby integrated with game          & 2387 Haskell                  \\ \hline 
+        \multicolumn{2}{|c|}{\textit{Other applications}}                   \\
+        Chinese Chequers \#1                & 483  C++                      \\ \hline
+        Chinese Chequers \#2                & 1011 Java                     \\ \hline
+        Chinese Chequers \#3                & 1377 Java                     \\ \hline
+        ChineseCheckersWebApp               & 2404 Java, 1277 JavaScript    \\ \hline 
+        
+    \end{tabular}
+    \caption{SLOC comparison between the developed application and other similar applications.}
+    \label{tab:sloc-comparison}
+\end{table}
 
 \section{Discussion}
+Throughout the project, a number of interesting decisions have been made and results have been reached. Here follows first a discussion on the methodology of the project, if the decisions taken were any good and whether the ways of measuring were enough. Second, a discussion on the results that were reached follows, if they can be considered valuable and how they hold up compared to other frameworks.
+
+
 \subsection{Method discussion}
-During the initial stages of the project a number of design decisions were made, some of these decisions changed or was altered during development. Here follows a discussion on the various details of the implementation and method of measuring performance, stability and programmer productivity.
+During the initial stages of the project, a number of design decisions were made, some of these decisions changed during development. Here follows a discussion on the various details of the implementation and method of measuring performance, stability and programmer productivity.
 
 \subsubsection{Lobby}
-The lobby system experienced various design changes throughout the project. From not being included at all to being what is described in \cref{sub:game-lobby-results}. Here the design choices taken along the way will be discussed.
+The lobby system experienced various design changes throughout the project. From not being included at all to being what is described in \cref{sub:game-lobby-results}. Here the design choices taken along the way are discussed.
 
-Firstly, the decision to make a lobby system at all was something that was decided upon early in the development. Creating a lobby system was considered because it would then be possible to test more qualities of Haste.App, than if only a simple game was developed. It allowed testing of aspects such as database usage, secure connections, password management, serving static content, and real time interaction with the server. As such the Lobby has been a useful addition during development. It has, however, made the project substantially larger and made it take more time, while also perhaps being superfluous in that it tests some things that could just as easily been tested in the game by modifying the implementation somewhat. 
+Firstly, the decision to create a lobby system at all was something that was an early decision. Creating a lobby system was considered since it would make it possible to test more  qualities of Haste.App than if only a simple game was developed. It allowed testing of aspects such as database usage, secure connections, password management, serving static content, and real-time interaction with the server. As such the Lobby has been a useful addition during the assessment. It has, however, made the project substantially larger and made it take more time, while also perhaps being superfluous in that most things it tests could just as easily been tested in the game by modifying the implementation.
 
-Secondly, the choice to include a chat in the lobby has led to being able to test real time interaction with Haste.App in a way that clearly shows eventual delay. The same thing could, however, have been tested in other ways, such as measuring time response from request to the server. It does, however, serve as a proof of concept that Chats, with different people or channels, is possible to implement in an easy way with Haste.App.
+The choice to include a chat in the lobby has led to being able to test real-time interaction with Haste.App in a way that clearly shows eventual delay. The same thing could, however, have been tested in other ways, such as measuring time response from request to the server. It does, however, serve as a proof of concept that Chats, with different people or channels, is possible to implement in an easy way with Haste.App.
 
-Thirdly, implementing a way of dealing with password was also something that the project felt was crucial in assessing the suitability of Haste.App. It also revealed a couple of rather important security issues with Haste.App. This was a crucial decision to uncover these issues, and something that would have been important to implement nonetheless. 
+Implementing a way of dealing with passwords was also something that the project felt was crucial to assess the suitability of Haste.App for web development. It was crucial since user authentication is a critical part of the web. Implementing password management revealed a security issue with Haste.App. Namely that it is currently not possible to use secure HTML5 WebSockets for the communication between clients. According to Ekblad, however, this should be trivial to change \cite{a-distributed-haskell-for-the-modern-web}.
 
-Fourthly, having a database connected to the server side was also something that was important to test. It was important to test since databases are a crucial aspect of web development.
-
+Furthermore, having a database connected to the server-side was also something that was important to test. It was important to test since databases are a crucial aspect of web development since it allows for storing data between sessions, even when a server has to be restarted. 
 
 \subsubsection{Game}
+The game of Chinese Chequers had a pretty linear development path and not many changes were made to the actual design described in \cref{sec:method}. The game aspect of this project is more of a complementary element to the lobby rather than being the primary focus of the project itself. This, of course, means that Haste.App and to some extent the Haste compiler could not be tested sufficiently by just consulting the game. Below follows a more in-depth discussion on what the game could evaluate and potential changes that could have been made.
+
+
+The game logic itself is developed in pure Haskell as mentioned in \cref{sec:game-development}. This does not leave much room for other choices because the purpose is to write the code in Haskell. The game was intended to be quite simple mainly due to as mentioned before, the focus not lying there. A consequence, as stated in \cref{sec:limitations}, is that the game does not thoroughly test the graphical possibilities that Haste offers.
+
+Being turned based results in cutting down on a lot of communication. A real time game has to handle a lot more network communication, and the communication has much more arbitrary behaviour. Regarding Haste.App this would of course have been interesting, but due to limited amount of time this had to be cut.
+
+The game is also limited in the amount of players, with a maximum of six. It would have been interesting to have a game which allowed for more, or maybe does not have an upper limit. This lets us stress test Haste.App even more, albeit the lobby serves this purpose in our work.
+
+Developing the game to real time behaviour, with a potential of unlimited amount of active players does is theory very interesting for testing Haste.App. One must though remember that doing these modifications will most likely effect the game logic heavily. Where time is a resource, this might shift focus into more game-centric development.
 
 
 \subsubsection{Measuring performance}
-Measuring performance of an application is something that isn't very hard. Discussed here will be if the aspects taken into account when measuring performance are enough. 
+Measuring the performance of an application can be done in many ways. What follows is a discussion of the criteria chosen to measure the performance of Haste.App. Followed by a discussion of the methods used to measure the selected criteria.
 
-Firstly, measuring bandwidth is very relevant. If the amount of bandwidth required is too much it is a problem with Haste.App. However, the larger part of bandwidth is more often than not static content such as images or videos. This is not something that Haste.App has anything to do with. The bandwidth required to send the JavaScript, to keep the connection alive, and the communication between server and client are the only aspects taken into account. However, these are often quite small in comparison to media content. As such bandwidth is probably not a huge problem with Haste.App, regardless of if it requires more than other frameworks or not.
+Firstly, measuring bandwidth is very relevant. If the amount of bandwidth required is too much, it is a problem with Haste.App. However, the larger part of bandwidth is more often than not static content such as images or videos. Haste.App has nothing to do with static content. The bandwidth required to send the JavaScript, to keep the connection alive, and the communication between server and client are the only aspects taken into account. However, these are often quite small in comparison to media content. As such bandwidth is probably not a huge problem with Haste.App, regardless of if it requires more than other frameworks or not.
 
-Secondly, measuring the amount of required system resources can be a substantially more prominent issue. If the generated JavaScript is very slow or requires an unnecessary amount of system resources (compared to other similar sites) it can be considered to be a prominent issue with Haste.App. The same can be said about the server side, if the server seems to use large amounts of system resources, especially when there are a lot of active clients.
+However, measuring the amount of required system resources can be a more prominent issue. If the generated JavaScript is very slow or calls for an unnecessary amount of system resources (compared to other similar sites), it can be considered to be a prominent issue with Haste.App. The same can be said about the server-side if the server seems to use significant amounts of system resources, especially when there are a lot of active clients.
 
-\todo{Discuss how we measured bandwidth and system resources}
+The way performance of the server was measured can be questioned. While it was decided to use scripting to simulate clients, such tests do not necessarily simulate real conditions. The scripts are in general faster than a real user, and they cannot in a simple way interact with the game. The game, however, communicates in the same way with the server as the rest of the lobby. Moreover, the speed of interaction of the scripts can be interpreted as the scripts acting as more than one client. The use of automated scripts means that the results of these performance tests will have to be considered carefully, but the general picture of the performance of Haste.App is illustrated well enough.
+
+In addition, the system (\textit{Munin}) to measure the actual CPU, memory, network traffic, and load average was not optimal. It gathered data on a resolution of 5 minutes which meant that it was hard to get accurate data. It had been easier to see the results about the performance of Haste.App if it had been possible to gather data every few seconds over an interval and then plot that data. As it is, however, since the tests were run in such a short interval, they can be difficult to interpret.
+
+Furthermore, the tool used to measure the client-side performance, \textit{Chrome Developer Tools}, can be regarded as quite good. The statistics the tools displays are relevant and sufficiently accurate. 
+
+To measure bandwidth on the client the application \textit{Wireshark} was used. Because \textit{wireshark} is a packet sniffer its primary purpose is to look at what kind of data is sent over the network, however since it captures all packets sent it is possible to look at the general statistics of a particular connection.
+
+%\todo{Discuss how we measured bandwidth and system resources}
 
 
 
 \subsubsection{Measuring stability}
-What to take into account when measuring stability is a difficult question. Specified here are that stability is primarily measured by the amount of unrecoverable errors. This is a very hard thing to measure since there can be a lot of errors until they are discovered and as such it's hard to know how many unrecoverable errors can occur. However, with the combination of a statically typed system both on client, server, and over communication and decent testing with the help of QuickCheck there aren't a lot of possible unrecoverable errors left. So in this respect Haste.App seems to perform very well, entirely based upon the fact that Haste.App is built upon Haskell.
+The stability of Haste.App was primarily measured by the occurrence of unrecoverable errors when looking at four different scenarios: updating the server during an active session, the client having outdated JavaScript, runtime errors on the server, and runtime errors on the client.
 
-\subsubsection{Measuring programmer productivity}
-%VAAAD SKA DET STÅ HÄR, HJÄLP! JAG HJÄLPTE JU TILL
-Measuring programmer productivity is inherently a hard problem since the metrics that can be considered are largely subjective. Especially to measure how much effort is put into a program depends on a lot of factors that range from things that shouldn't be considered such as the previous knowledge of the project participants to things that should be considered such as the general stability and complexity of the library. The problem in this case is to recognise how much the subjective metrics contributed to programmer productivity 
+The first scenario was a critical aspect to consider as servers often get restarted. They get restarted either to update or because a crash had occurred. When this happens, it is preferable that the clients do not crash. However, looking at other online games, updates often occur during server downtime. Therefore, it is not unreasonable that a game created using Haste.App would have to be updated when the server was offline. On the other hand, if a regular web application is developed in Haste.App, such as a lobby system, it should be possible to update that application without crashing the client.
 
-%How we measured programmer producitivity according to method
-%Measue the effort put into writing the program
-%Measure how errors in Haste and Haste.App influence productivity
-%Influenced by the client-centric and linear approach
-%If the application is completed faster than expected.
-%Gather data about how long it should take.
+The second scenario was mainly considered since the code has to be compiled twice, once with GHC and once with Haste. Because of this, it was thought that syncing the versions of the client and server would be a problem. However, this is probably an issue the web server should deal with, assuming the deployment of the application is done correctly, and not Haste.App. 
+
+The two final scenarios were considered as it was thought that Haste.App or Haste could have some internal problems that might lead to crashes. While this was an important aspect to consider, it is not inherent to the programming model of Haste.App. Therefore it might not be a critical scenario to assess too closely.
+%This is a very hard thing to measure since there can be a lot of errors until they are discovered and as such it's hard to know how many unrecoverable errors can occur. It is as such very important to monitor the application to see if and when unrecoverable errors occur, which seems to make sure that stability is measured enough.
+
+
+
+\subsubsection{Measuring programmer productivity}%\todo{make sure everyone agrees on this subsection}
+Measuring programmer productivity is inherently a hard problem since the metrics considered are largely subjective. Especially measuring how much effort is put into a program depends on many factors that range from things that should not be considered, such as previous knowledge, to things that should be considered such as the general stability and complexity of the library. The problem, in this case, is to recognise how much the subjective metrics contributed to programmer productivity in relation to the objective metrics. The primary aspects that were considered in this project, as stated in \cref{sub:method-programmer-productivity}, were errors present in Haste or Haste.App, the client-centric linear programming model of Haste.App, Haskell's strong static type system, and the lines of code of the finished application.
+
+Out of these criteria, the only one that can be mostly considered objective is the first one, errors present in Haste or Haste.App. This criterion is mostly objective because the errors that can occur due to bugs in the library should be the same regardless of other circumstances, such as the previous knowledge of the programmers. Furthermore, if any errors are encountered, they can be counted and put in relation to other similar libraries.
+
+The next two criteria are mostly subjective, a client-centric linear programming model influence on the project is very much dependent on the previous knowledge of the programmers using it. If the programmers have used a similar programming model before their perception of it will be coloured by their previous experiences. On the other hand, if they have not used anything similar in the past, their ability to grasp this new concept could unfairly sway their opinion on way or the other. Similarly, opinions on Haskell's strong static type system depends on how used the programmers are to static typing in general and if they have or have not done similar projects in other languages.
+
+The last criteria, can be considered both objective and subjective. It is objective in the sense that the comparison between written lines of code is straight forward, and it indicates the effort put into constructing the application. However, the number of lines of code is influenced by the programmer writing the code and can therefore vary regardless of language or programming model. Nevertheless, there is evidence supporting a correlation between the number of errors per line of code \cite{mcconnell2004code}, which would then be an objective measurement of programmer productivity.
+%The last criterion, comparing the general productivity to other similar projects, can be considered both an objective and subjective criterion. It is objective in the sense that the comparison is simple to make, by looking at the number of person hours put into a project, the number of problems that occurred during development or the amount of code written. However, these metrics are all influenced by the knowledge of the programmers developing the project, as such different projects that accomplish the same thing could give widely different results.
+
+In conclusion, the criteria chosen to measure programmer productivity in this project are mostly subjective. Because of this the results regarding programmer productivity could be influenced more by biased opinions or previous knowledge and experience by the project participants than objective facts.
+
 
 \subsection{Result discussion}
-The results reached regarding performance, stability and programmer productivity are discussed here in regards to how well they met the expectations the project had on Haste.App as well as in what respect the measured results can be disputed. 
+The results reached regarding performance, stability and programmer productivity are discussed here in regards to how well they met the expectations the project had on Haste.App as well as in what respect the measured results can be disputed.
 
-\subsubsection{Discussion on performance}
-\subsubsection{Discussion on stability}
-\subsubsection{Discussion on programmer productivity}
+\subsubsection{Performance of Haste.App}
+Haste.App does not seem to have any particular issues with performance. The results in \cref{sub:performance-results}, however, does not show much concerning how Haste.App's performance is. The results are split into server-side performance, client-side performance, and bandwidth.
+
+Firstly, the server-side performance results illustrate the general picture of the server part of Haste.App. They do, however, not show any specific issues. The only conclusion one can draw from the results in \cref{subsub:server-performance-results} is that there are no critical issues with performance. The only point that seems to illustrate a problem is at 14:45 in \cref{fig:cpu-results} where the 80 clients manage to reach 30\% CPU utilisation as they create a game each and then changes its name, max number of players and password. Although this could be an issue if there are instead 200 clients connected to the server, the measurements were also made on a server with an eight-year-old processor, which perhaps is not what would be used in a modern server.
+
+Regarding the client performance, there is not a large difference between the developed client performance and other similar sites. A disadvantage with the developed application is that the loading time increases linearly with the number of games. This would be a critical issue when the number of games is large. However, it is most probably because of a naive implementation of loading all active games upon entering the lobby into a table. The client performance tests show that there is no critical issue with client performance in Haste.App, but not much else.
+
+The results from the bandwidth tests of the server show that the bandwidth required during a moderate load (80-90 simultaneous clients) is not concerning. The results indicate that each user uses about $9.00Kb/s$ during the network test in \cref{fig:network-results}, which is quite small. The only concerning result from the server-side bandwidth test would have been if the test indicated that each connection had a significant overhead. 
+
+Furthermore, the bandwidth required by the application was not concerning either, when compared to similar sites on the client-side. As shown in \cref{tab:site-comparisons}, the bandwidth needed during a 10 minute period either in the lobby or game of this project is not particularly large. Furthermore, when compared to other sites the difference in bandwidth can be explained by the difference in active users in one case and a difference in static content in the other case. All of this concludes that there are not any particular problems with the bandwidth requirements by Haste.App.
+
+
+
+
+
+\subsubsection{Stability of Haste.App}
+The stability of Haste.App does not seem to be a large problem, based upon the results in \cref{sub:stability-results}. The amount of unrecoverable errors in Haste.App seem minimal, and in comparison to other web frameworks Haste.App performs well. The only prominent issue is updating the server without losing connection to the clients and having to resort to using FFI.
+
+With the combination of a statically typed system both on client, server, and network communication and decent testing with the help of QuickCheck there are few possible unrecoverable errors. In this respect Haste.App seems to perform very well, entirely based upon the fact that Haste.App can utilise Haskell's strong type system fully.
+
+Moreover, compared to the stability of other web frameworks, it is hard to find anything detrimental to Haste.App. Compared to other web applications that are written in loosely typed languages, such as the popular Ruby on Rails framework, Haste.App performs well since Haskell is the underlying language.
+
+Whenever the server needs to be restarted, which happens whenever the server crashes or an update occurs all clients loses the connection. This is a prominent issue with Haste.App as restarts to a server can be frequent in a deployed application. Whenever the server has to restart, the clients has to restart from the entry point of the application. In a different framework a server can be restarted without the clients noticing, were the effect instead would be latency or a failed request.
+
+However, this project has had a limited time in assessing the stability of a finished application in Haste.App. In most real world scenarios, serious bugs are sometimes discovered after some time of deployment. As such it can be difficult, at this stage, to give a correct depiction of the stability of Haste.App, based on the small amount of time with a deployed application. 
+
+In addition, when using FFI functions, the strong type system of Haskell is completely absent. The JavaScript code executed by the FFI is written in a JSString type (similar to string) which easily type checks at compile time. The compiler, however, does nothing to ensure the correctness of the JavaScript code. 
+
+% Stabilitet många användare över lång tid,
+
+
+
+\subsubsection{Programmer productivity when working with Haste.App}
+There are a lot of things that influenced programmer productivity, as one can see in \cref{sub:programmer-productivity-results}. Here a discussion of their importance to the overall programmer productivity of working with web development in Haste.App follows.
+
+On several occasions when developing the application, some solutions that were unintuitive had to be used. A good illustration of this is the lack of channels on the client-side. This was solved as described in \cref{sub:updating-client}. These unintuitive solutions does affect the programmer productivity in a negative way. A probable solution to this is by introducing more abstractions in the libraries for Haste. Another example is the DOM management which relied on very low-level operations to manipulate the DOM. 
+
+However, increasing the amount of abstractions in the libraries is not likely to happen shortly. This is mainly because Haste and its accompanying libraries are still in somewhat unstable releases. The primary developer also mentioned that having low-level operations in the core libraries is his way to go. The abstractions will then be introduced in other libraries developed by different users. This, though, depends on the size of the user base which still is relatively small.
+
+An additional effect on programmer productivity is the amount of lines of code, which in \cref{subsub:lines-of-code-results} is compared to other similar applications. The lines of code of an online multiplayer version of Chinese Chequers in Haste.App was about 150 more than an offline multiplayer version in C++. This decrease in lines of code is quite remarkable as 150 lines are not much to implement online multiplayer. Moreover, the application is about 300 respectively 600 lines shorter than the two offline Chinese Chequers implemented in Java. While one of these applications has implemented some additional variants of Chinese Chequers, it still illustrates that an online Haste.App implementation is smaller than an offline Java implementation. The same point is shown with the web application implemented in Java.
+
+Using a library that extends the type safety of Haskell to SQL has had both positive and negative effects on programmer productivity, as outlined in \cref{subsub:database-results}. However, the conclusion is that, overall, it has had a positive influence on programmer productivity. Even though the learning time was longer than using an untyped SQL library the benefits of both detection of errors at compile time and the guaranteed stability of the application has freed up time that would otherwise be spent proofreading code.
+
+It is not the purpose of this paper to compare the declarative and imperative paradigm. There are, however, some notable differences when writing Haskell versus writing JavaScript, which influences programmer productivity. One disadvantage with Haskell is that it can be a hard language to master. A report mentions that the sophisticated type system of Haskell is appreciated by experienced programmers \cite{heliumHaskell}. The same report, however, also notes that the generality of Haskell can lead to confusing error messages and as such frustrate learners. These error messages might scare some adopters away from Haskell and Haste.App.
+
+Furthermore, the run time errors that do occur are harder to debug. These errors do not occur very often because of the static type checking and in this project they have not been significantly harder to solve. This concludes that even though the errors reported by the JavaScript generated by Haste could be better, they do not have any significant effect on programmer productivity.
+
+Moreover, the ability to separate pure from impure code did not have a large impact. The only part of the code that is pure is the game logic. The code that is pure was easy to test and prove working. All other code were side effecting, and had to be side effecting. The side effecting code on the server was still tested with \textit{QuickCheck}, but the tests are more verbose and not as elegant as the pure tests. Because so much of the code is side effecting, the otherwise positive effects of being able to separate pure code from impure code has not had a large effect.
+
+While developing with Haste and Haste.App the only structural help received was that of the Haskell tool stack \todo{reference stack? Do we ever mention stack anywhere else in the report?} which was used to generate the project. During the development of the lobby system, the module structure was redesigned twice, pointing towards a lack of standards. But since Haste.App if fairly unique in its seamless client to server communication philosophy; no existing standard was directly applicable. More in general, it would be helpful to have some preset norms to follow. These norms could, very appropriately, be in the form of a framework which would define standards regarding module structure of where to put views and how to update them and also RPCs and server logic. But we also need to understand that Haste.App is a library, not a framework.
+
+
+
+\subsection{Haste.App in society}
+Haste.App is more than just a library, it is a proof of concept for a lot of principles not widely used in modern web development. These include, which have been mentioned before: Linearity, client-centricity and such, which all together have mostly positive influence on programmer productivity. Increasing programmer productivity could potentially have very beneficial effects on a society level.
+
+
+Firstly, increasing productivity might be positive for the local, national or even international economy. The increase of functionality that a single programmer could produce might also stimulate innovation and startups, which of course is also being a positive influence on the economy. 
+
+Secondly, the seamless and linear programming model could also be an effective way for a first approach at web programming at school, since it abstracts over the network, relieving the programmer from dealing with fuzzy and perhaps unfamiliar network protocols. The linearity makes the program flow easier to follow, and not having to deal with asynchronous callbacks. 
+
+In addition, it is also worth mentioning that even though Haste.App might not break through as the only framework supporting these principles, it might very likely influence other more widely used ones. Of course, one should still expect the benefits mentioned above. 
+
+Even tough some benefits might not require a programming overhaul in the industry, gaining the majority or all of the advantages offered by Haste.App most certainly does. Some advantages relies on a functional approach to programming, for instance the advanced type system in Haskell. Shifting the dominating programming paradigm in industry is of course a major obstacle.
+
 %Positive things from result section
 %Using haskell??? type system etc
 %Database management
@@ -494,20 +1225,23 @@ The results reached regarding performance, stability and programmer productivity
 %Standards?
 
 
-
-
-\subsubsection{Database}
-%Compare with other frameworks, rails? javascript?
-%Discuss about type safe SQL queries vs strings, pros cons
-%In hindsight what should you use? If you know SQL? If you dont?
-%Improvements?
-
-%Should we have one discussion section or multiple subsections?
-%Pro for one discussion section
-%   Method and result may be overlapping. Easier to write discussion in one section
-%Pro for multiple subsections:
-%   Simply easier to find and skim through the report when you know what you're looking for.
-
 \section{Conclusion}
+The purpose of this project was to evaluate Haste.App in regards to programmer productivity, performance, and stability. To assess this purpose, an application was created using Haste.App. The application had two parts: a lobby system and a game. The lobby system tested the scalability of Haste.App while the game tested the communication between clients. From this application the programmer productivity of developing with Haste.App was examined. The application was also deployed to a server to test the performance and stability of an application written in Haste.App. 
+
+Firstly, the programmer productivity when writing an application using Haste.App is influenced by its linear, client-centric programming model, errors present in Haste.App and the static type checking present in Haskell. Along with Haste.App the network communication can also be type checked which relieves the programmer from manually checking any types which was shown to have a positive effect on programmer productivity since all such errors are caught effortlessly. The linear, and client-centric programming model also has a positive influence on programmer productivity. Nevertheless, there are mainly two negative points in regards to programmer productivity. The first being standards in Haste.App, there is, for example, no obvious way to organise a project or send data between the client and server. The second is the low level of functions that operate on DOM elements. More up to date libraries that handle DOM manipulation will hopefully be available when Haste.App reaches a more stable state with more users.
+
+Next, the performance of Haste.App was examined, and it was not possible to find any large discrepancy between using Haste.App or any other web library in terms of server-side performance, client-side performance, or bandwidth. It was, however, not possible to find any advantage to using Haste.App in this respect either.
+
+Lastly, the stability of Haste.App was evaluated and it was found that stability is not a problem but rather a positive aspect of working with Haste.App. The stability that Haskell provides with its static type checking and with Haste.App extending this type checking over the network communication there are not many errors that can influence stability. The one key point that can be an issue with stability is that the JavaScript is sometimes cached at the client and may get outdated and cause a crash at either the client or server. However, stability issues are often not revealed until after an application has been deployed for some time, and as such there may be stability issues that this report has not covered.
+
+To conclude, Haste.App is a great framework that enables real distributed web applications to be written using Haskell and all the benefits that it brings. It brings a lot regarding programmer productivity with a few, easily fixable, issues. Furthermore, it was not possible to find any critical problems with the performance of Haste.App, and while not much can be said about the stability due to the short lifespan of the testing, it appears to be stable enough.
+
+\newpage
+\addcontentsline{toc}{section}{References}
+\printbibliography
+
+\newpage
+\section{Attachments}
+\input{attachments}
 
 \end{document}
