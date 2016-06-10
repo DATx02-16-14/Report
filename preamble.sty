@@ -31,8 +31,9 @@
 \setlength{\parskip}{1em}
 \frenchspacing
 \usepackage{subcaption}
-\usepackage{glossaries}
+\usepackage[nonumberlist]{glossaries}
 \makenoidxglossaries
+\setlength{\glsdescwidth}{0.8\textwidth}
 
 
 % Comments on 
@@ -46,7 +47,7 @@
 	\put(#1,#2){
 	\parbox[b][\paperheight]{\paperwidth}{
 	\centering
-	\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#3}}}}
+	\includegraphics[width=0.7\textwidth,height=0.7\textheight,keepaspectratio]{#3}}}}
 
 
 
